@@ -1,141 +1,643 @@
+Google Classroom API – Grade & Submission Data Exporter
 
+A Spring Boot application that fetches student, coursework, and submission data from Google Classroom and exports the data into Google Sheets and CSV files.
 
-[google-classroom-documentation (2).pdf](https://github.com/user-attachments/files/22420534/google-classroom-documentation.2.pdf)
-        Google Classroom API – Export Grades Data in Tabular Format 
- 
-1. Introduction  
-  The Google Classroom Submission Exporter is a Spring Boot application designed to fetch student submission data from Google Classroom and export it to Google Sheets and local CSV files. It uses OAuth2 for secure authentication and interacts with Google Classroom, 
-Google Sheets, and Google Drive APIs. The application organizes data by course batches (B1, B2, B3, B4, or Other_Batches) and generates detailed reports for educators or administrators.  
-This documentation provides a clear, step-by-step explanation of the project, including its purpose, setup, functionality, and usage, with screenshots for clarity.  
-  
-2. Project Overview 
-2.1 Purpose  
-The application automates the process of collecting student submission data from Google Classroom and exporting it into organized formats:  
-Google Sheets: One sheet per batch, with tabs for each course.  
-CSV Files: Local backups for each course.  
-2.2 Key Features  
-Authenticate users via Google OAuth2.  
-Fetch courses, students, coursework, and submission statuses from Google Classroom.  
-Organize data by batch (e.g., B1, B2, etc.).  
-Export data to Google Sheets in a structured format.  
-Save google sheet files in drive.  
-Handle errors gracefully with custom error pages.  
-2.3 Technologies Used  
-Spring Boot: Backend framework.  
-Google APIs: Classroom, Sheets, and Drive APIs.  
-OAuth2: For secure authentication.  
-OpenCSV: For generating CSV files.  
-WebClient: For making API calls.  
-Java: Programming language.  
-3.Project Structure  
-  The project is organized into packages for modularity:  
-com.bridgelabz: Main application class (Success2Application). com.bridgelabz.controller: REST controllers for handling API requests. com.bridgelabz.service: Services for interacting with Google APIs and processing data. com.bridgelabz.csvUtiles: Utility for generating CSV files.  com.bridgelabz.model: Data models (e.g., StudentInfo). com.bridgelabz.security: Security configuration for OAuth2.  com.bridgelabz.error: Custom error handling. com.bridgelabz.handler: OAuth2 error handling.  
-Key Files application.properties: Configuration for server port, OAuth2, and Google API settings.  
-ClassroomController.java: Handles the main endpoint to fetch and export data.  
-GoogleClassroomService.java: Core logic for fetching and organizing data.  
-GoogleSheetsDriveService.java: Exports data to Google Sheets and manages Drive folders.  
-4. Setup and Installation  
-4.1 Prerequisites  
-Java 17 or higher.  
-Maven: For dependency management.  
-Google Cloud Project: With Classroom, Sheets, and Drive APIs enabled.  
-OAuth2 Credentials: Client ID and Client Secret from Google Cloud Console.  
-4.2 Configuration  Create a new project.  
-Enable the following APIs:  
-Google Classroom API 
-Google Sheets API  
-Google Drive API  
- 
-Step 1: Enable Google Classroom API 
-1.	Go to the Google Cloud Console. 
-2.	Create a new project or select an existing one.  
-   
-3.	Navigate to APIs & Services → Library.  
-4.	Search for Google Classroom API and enable it. 
-  
-As well as do same for following API’S 
-Google Sheets API  
-  
-Google Drive API  
-  
-5.	Go to APIs & Services → Credentials. 
-6.	Click on + Create Credentials → OAuth 2.0 Client IDs. 
-  
- 
-7.	Choose Desktop App or Web Application (for testing purposes). 
-   
-Set the redirect URI to http://localhost:8084/login/oauth2/code/google.  
-  
- 
-   
-Download the credentials (Client ID and Client Secret).  
-  
-Update application.properties: Open src/main/resources/application.properties and add your credentials in properties file.  
-server.port=8084  
-spring.security.oauth2.client.registration.google.client-id=<your-client-id> 
-spring.security.oauth2.client.registration.google.client-secret=<your-client-secret> spring.security.oauth2.client.registration.google.redirecturi=http://localhost:8084/login/oau th2/code/google google.drive.folder-id=<your-drive-folder-id>  
-5. How It Works  
- 5.1 Authentication: 
-   The application uses OAuth2 to authenticate users with their Google accounts. Upon accessing the application, users are redirected to Google’s login page. 
-   
-   
-After successful login, users are redirected to the /classroom/all-student-submissions endpoint.  
-5.2 Fetching Data  
-The GoogleClassroomService fetches data in the following steps:  
-Courses: Retrieves all courses using the Classroom API.  
-Students: Fetches student details (name, email) for each course.  
-Coursework: Collects coursework titles for each course.  
-Submissions: Retrieves submission statuses (e.g., Submitted, Assigned, Missing) for each student and coursework.  
-5.3 Organizing Data  
-Courses are grouped by batch (B1, B2, B3, B4, or Other_Batches) based on their names.  
-Student data is stored in a map: batch -> course -> student -> (email, submission statuses).  
-5.4 Exporting Data Google Sheets:  
-One spreadsheet is created per batch.  
-Each course in the batch gets its own tab.  
-Columns include student name, email, and submission statuses for each coursework.  
-The spreadsheet is saved in a specified Google Drive folder.  
-Google sheet Files:  
-A google sheet  file is generated for each course, saved in drive.  
-Columns match the Google Sheets format. 	  
-   
- 
- 
-  
-5.6 Error Handling  
-If the OAuth2 token is invalid, a 401 error is returned.  
-API errors are caught and logged, with a 500 error response.  
-Custom error pages are displayed for 404 (Not Found) and 500 (Server Error) statuses. 
-    
-6. Usage  
-Access the Application: Open a browser and go to http://localhost:8084.  
-Log In: Sign in with a Google account that has access to the Classroom courses.  
-Fetch and Export Data: After login, the application automatically calls the /classroom/allstudent-submissions endpoint, which Fetches all course data.  
-Generates Google Sheets and CSV files.  
-Returns a success message: “All Sheets exported successfully!” View 
-Outputs:  
-Check the Google Drive folder for the generated spreadsheets.  
-Look in the project’s root directory for CSV files.  
-   
-  
-  
-7. Troubleshooting  
- 7.1 Common Issues  
-Invalid OAuth2 Credentials:  
-Ensure the Client ID and Client Secret are correct in application.properties.  
-Verify the redirect URI matches the one in Google Cloud Console.  
-API Errors:  
-Check if the required APIs are enabled in Google Cloud Console.  
-Ensure the Google account has access to the Classroom courses.  
-Memory Issues:  
-The application is configured to handle large responses (spring.codec.max-inmemorysize=50MB). Increase this value if needed.  
-7.2 Logs  
-Enable debug logging in application.properties to troubleshoot:  logging.level.org.springframework.security=DEBUG Check the console for detailed error messages.  
-8. Future Improvements  
-Add support for filtering courses by date or status.  
-Implement a user interface for easier interaction.  
-Allow users to customize the export format (e.g., include additional columns).  
-Add support for exporting to other formats (e.g., Excel).  
-9. Conclusion  
-The Google Classroom Submission Exporter simplifies the process of collecting and organizing student submission data. By integrating with Google APIs, it provides a scalable solution for educators to track student progress across multiple courses. The application is secure, modular, and easy to extend for additional features.  
-  
+The application uses Google OAuth2 for authentication and integrates with the Google Classroom, Google Sheets, and Google Drive APIs. Course data is organized based on batches such as B1, B2, B3, B4, and Other_Batches.
 
+1. Project Overview
+Purpose
+
+The Google Classroom Submission Exporter automates the process of collecting student submission information from Google Classroom and exporting it into organized and readable formats.
+
+Main Outputs
+Google Sheets
+CSV files
+Batch-wise course reports
+Course-wise submission reports
+Key Features
+Google OAuth2 authentication
+Fetch Google Classroom courses
+Fetch students enrolled in courses
+Fetch coursework information
+Fetch student submission statuses
+Organize courses based on batches
+Generate Google Sheets reports
+Store generated Google Sheets in Google Drive
+Generate local CSV backup files
+Custom error handling
+OAuth2 error handling
+Support for large API responses
+2. Technologies Used
+Technology	Purpose
+Java 17+	Programming Language
+Spring Boot	Backend Framework
+Spring Security	OAuth2 Authentication
+Google Classroom API	Fetch course and submission data
+Google Sheets API	Create and update spreadsheets
+Google Drive API	Store generated spreadsheets
+WebClient	Calling Google APIs
+OpenCSV	Generate CSV files
+Maven	Dependency Management
+3. Project Architecture
+
+The application follows a layered architecture.
+
+                    ┌───────────────────────┐
+                    │       Browser         │
+                    └───────────┬───────────┘
+                                │
+                                ▼
+                    ┌───────────────────────┐
+                    │   Spring Security     │
+                    │      OAuth2 Login     │
+                    └───────────┬───────────┘
+                                │
+                                ▼
+                    ┌───────────────────────┐
+                    │      Controller       │
+                    │ ClassroomController   │
+                    └───────────┬───────────┘
+                                │
+                                ▼
+                    ┌───────────────────────┐
+                    │       Services        │
+                    │                       │
+                    │ GoogleClassroomService│
+                    │ GoogleSheetsDriveSvc  │
+                    │ StudentService        │
+                    │ CourseService          │
+                    │ CourseworkService      │
+                    │ SubmissionService      │
+                    └───────────┬───────────┘
+                                │
+                ┌───────────────┼────────────────┐
+                ▼               ▼                ▼
+       Google Classroom   Google Sheets    Google Drive
+             API               API               API
+                │               │                │
+                └───────────────┼────────────────┘
+                                ▼
+                    ┌───────────────────────┐
+                    │      CSV Reports      │
+                    │   Google Sheet Files  │
+                    └───────────────────────┘
+4. Project Structure
+src
+└── main
+    ├── java
+    │   └── com.bridgelabz
+    │       ├── Success2Application.java
+    │       │
+    │       ├── controller
+    │       │   └── ClassroomController.java
+    │       │
+    │       ├── service
+    │       │   ├── GoogleClassroomService.java
+    │       │   ├── GoogleSheetsDriveService.java
+    │       │   ├── CourseService.java
+    │       │   ├── StudentService.java
+    │       │   ├── CourseworkService.java
+    │       │   └── SubmissionService.java
+    │       │
+    │       ├── model
+    │       │   └── StudentInfo.java
+    │       │
+    │       ├── csvUtiles
+    │       │   └── CSVWriterUtil.java
+    │       │
+    │       ├── security
+    │       │   └── SecurityConfig.java
+    │       │
+    │       ├── error
+    │       │   └── ErrorController.java
+    │       │
+    │       └── handler
+    │           └── OAuth2ErrorController.java
+    │
+    └── resources
+        └── application.properties
+Important Classes
+ClassroomController
+
+Handles application endpoints and initiates the Classroom data export process.
+
+GoogleClassroomService
+
+Responsible for:
+
+Fetching courses
+Fetching students
+Fetching coursework
+Fetching submissions
+Organizing data batch-wise
+GoogleSheetsDriveService
+
+Responsible for:
+
+Creating Google Sheets
+Creating worksheets/tabs
+Writing data into spreadsheets
+Creating or using Google Drive folders
+Saving generated spreadsheets in Google Drive
+CSVWriterUtil
+
+Generates CSV files as local backups.
+
+SecurityConfig
+
+Configures Spring Security and Google OAuth2 authentication.
+
+5. Prerequisites
+
+Before running the application, install the following:
+
+Java 17 or higher
+Maven
+Google account
+Google Cloud Project
+Google Classroom access
+
+The following Google APIs must be enabled:
+
+Google Classroom API
+Google Sheets API
+Google Drive API
+6. Google Cloud Configuration
+Step 1: Create a Google Cloud Project
+Open Google Cloud Console.
+Create a new project or select an existing project.
+Select the project.
+Step 2: Enable Google APIs
+
+Navigate to:
+
+Google Cloud Console
+        ↓
+APIs & Services
+        ↓
+Library
+
+Enable:
+
+Google Classroom API
+Google Sheets API
+Google Drive API
+Step 3: Create OAuth2 Credentials
+
+Navigate to:
+
+APIs & Services
+        ↓
+Credentials
+        ↓
+Create Credentials
+        ↓
+OAuth Client ID
+
+Select:
+
+Application Type: Web Application
+
+Configure the redirect URI:
+
+http://localhost:8084/login/oauth2/code/google
+
+After creating the credentials, Google provides:
+
+Client ID
+Client Secret
+7. Application Configuration
+
+Create or update:
+
+src/main/resources/application.properties
+
+Use environment variables for OAuth credentials instead of hardcoding secrets.
+
+spring.application.name=Success2
+
+server.port=8084
+
+spring.codec.max-in-memory-size=50MB
+
+# Google OAuth2
+spring.security.oauth2.client.registration.google.client-id=${GOOGLE_CLIENT_ID}
+spring.security.oauth2.client.registration.google.client-secret=${GOOGLE_CLIENT_SECRET}
+
+spring.security.oauth2.client.registration.google.redirect-uri=http://localhost:8084/login/oauth2/code/google
+
+spring.security.oauth2.client.registration.google.client-name=Google
+spring.security.oauth2.client.registration.google.authorization-grant-type=authorization_code
+
+# Google OAuth2 Scopes
+spring.security.oauth2.client.registration.google.scope=openid,profile,email,https://www.googleapis.com/auth/classroom.coursework.me,https://www.googleapis.com/auth/classroom.courses.readonly,https://www.googleapis.com/auth/classroom.coursework.me.readonly,https://www.googleapis.com/auth/classroom.coursework.students.readonly,https://www.googleapis.com/auth/classroom.rosters.readonly,https://www.googleapis.com/auth/classroom.student-submissions.students.readonly,https://www.googleapis.com/auth/classroom.profile.emails,https://www.googleapis.com/auth/classroom.coursework.students,https://www.googleapis.com/auth/spreadsheets,https://www.googleapis.com/auth/drive.file
+
+# Google OAuth2 Provider
+spring.security.oauth2.client.provider.google.authorization-uri=https://accounts.google.com/o/oauth2/auth
+spring.security.oauth2.client.provider.google.token-uri=https://oauth2.googleapis.com/token
+spring.security.oauth2.client.provider.google.user-info-uri=https://www.googleapis.com/oauth2/v3/userinfo
+
+# Logging
+logging.level.org.springframework.security=DEBUG
+Important
+
+Do not commit actual Google OAuth credentials to GitHub.
+
+Set them as environment variables:
+
+GOOGLE_CLIENT_ID
+GOOGLE_CLIENT_SECRET
+
+For example, on Windows CMD:
+
+set GOOGLE_CLIENT_ID=your-client-id
+set GOOGLE_CLIENT_SECRET=your-client-secret
+8. OAuth2 Authentication Flow
+
+The application uses Spring Security OAuth2 to authenticate the user.
+
+User
+ │
+ ▼
+Open Application
+ │
+ ▼
+Spring Security
+ │
+ ▼
+Google Login Page
+ │
+ ▼
+User Grants Permission
+ │
+ ▼
+Google Authorization Code
+ │
+ ▼
+Spring Security
+ │
+ ▼
+Access Token
+ │
+ ▼
+Google Classroom / Sheets / Drive APIs
+
+After successful authentication, the user is redirected to the application.
+
+9. Application Workflow
+
+The complete application workflow is:
+
+Start Application
+       │
+       ▼
+User Opens Application
+       │
+       ▼
+Google OAuth2 Login
+       │
+       ▼
+Authentication Successful
+       │
+       ▼
+Fetch Courses
+       │
+       ▼
+Fetch Students
+       │
+       ▼
+Fetch Coursework
+       │
+       ▼
+Fetch Student Submissions
+       │
+       ▼
+Organize Data by Batch
+       │
+       ├───────────────┐
+       ▼               ▼
+Generate CSV      Generate Google Sheet
+       │               │
+       │               ▼
+       │         Save to Google Drive
+       │
+       ▼
+Export Completed
+10. Fetching Google Classroom Data
+
+The application retrieves data in multiple stages.
+
+10.1 Fetch Courses
+
+The application calls the Google Classroom API to retrieve available courses.
+
+Example:
+
+B1 - Java Full Stack
+B2 - Spring Boot
+B3 - React
+B4 - Advanced Java
+10.2 Fetch Students
+
+For each course, the application retrieves enrolled students.
+
+The student information may include:
+
+Student Name
+Email
+Student ID
+10.3 Fetch Coursework
+
+For each course, the application retrieves coursework such as:
+
+Java Assignment
+Spring Boot Assignment
+REST API Assignment
+Project Assignment
+10.4 Fetch Submissions
+
+The application retrieves submission information for each student and coursework.
+
+Possible statuses include:
+
+Submitted
+Assigned
+Missing
+Returned
+11. Batch-wise Data Organization
+
+Courses are grouped according to their batch names.
+
+Supported batches:
+
+B1
+B2
+B3
+B4
+Other_Batches
+
+The application internally organizes the information approximately as:
+
+Batch
+  │
+  ├── Course
+  │     │
+  │     ├── Student
+  │     │      ├── Email
+  │     │      ├── Coursework 1
+  │     │      ├── Coursework 2
+  │     │      └── Coursework 3
+  │     │
+  │     └── Student
+  │
+  └── Course
+
+This makes it easier to generate batch-wise reports.
+
+12. Google Sheets Export
+
+The application generates Google Sheets containing student submission information.
+
+A typical report contains:
+
+Student Name	Email	Assignment 1	Assignment 2	Assignment 3
+Student 1	student1@example.com	Submitted	Missing	Submitted
+Student 2	student2@example.com	Submitted	Submitted	Assigned
+
+Depending on the implementation, spreadsheets are organized by batch and/or course.
+
+The generated Google Sheet files are stored in the configured Google Drive location.
+
+13. CSV Export
+
+The application also generates local CSV files.
+
+Example:
+
+B1_Java_FullStack.csv
+B2_Spring_Boot.csv
+B3_React.csv
+B4_Advanced_Java.csv
+
+CSV files act as local backup/export files.
+
+14. Main Endpoint
+
+The main export operation is exposed through:
+
+/classroom/all-student-submissions
+
+The endpoint triggers the process of:
+
+Fetch Courses
+      ↓
+Fetch Students
+      ↓
+Fetch Coursework
+      ↓
+Fetch Submissions
+      ↓
+Process Data
+      ↓
+Generate CSV
+      ↓
+Generate Google Sheets
+      ↓
+Save Sheets to Google Drive
+
+On successful completion, the application returns:
+
+All Sheets exported successfully!
+15. Running the Application
+Step 1: Clone the Repository
+git clone <repository-url>
+
+Navigate to the project:
+
+cd google-classroom-report-generation
+Step 2: Configure Google Credentials
+
+Set:
+
+GOOGLE_CLIENT_ID
+GOOGLE_CLIENT_SECRET
+
+as environment variables.
+
+Step 3: Build the Project
+
+Using Maven:
+
+mvn clean install
+Step 4: Start the Application
+mvn spring-boot:run
+
+The application starts on:
+
+http://localhost:8084
+16. Using the Application
+Step 1
+
+Open:
+
+http://localhost:8084
+Step 2
+
+Sign in using a Google account.
+
+Step 3
+
+Grant the required permissions.
+
+Step 4
+
+The application authenticates the user and starts the Classroom export process.
+
+Step 5
+
+Check the generated files:
+
+Google Drive
+    └── Generated Google Sheets
+
+Project Directory
+    └── Generated CSV Files
+17. Error Handling
+
+The application contains custom error handling for common failures.
+
+401 – Unauthorized
+
+Occurs when the OAuth2 authentication/token is invalid or unavailable.
+
+404 – Not Found
+
+Displayed when a requested resource or endpoint does not exist.
+
+500 – Internal Server Error
+
+Used for unexpected application or Google API failures.
+
+Google API errors are logged for troubleshooting.
+
+18. Troubleshooting
+Invalid OAuth2 Credentials
+
+Check:
+
+Client ID
+Client Secret
+Redirect URI
+
+The redirect URI configured in Google Cloud must exactly match:
+
+http://localhost:8084/login/oauth2/code/google
+Google API Errors
+
+Verify that the following APIs are enabled:
+
+Google Classroom API
+Google Sheets API
+Google Drive API
+
+Also verify that the authenticated Google account has access to the required Classroom courses.
+
+Insufficient Permission / 403 Error
+
+If Google returns an error such as:
+
+ACCESS_TOKEN_SCOPE_INSUFFICIENT
+
+verify that the required OAuth scopes are configured.
+
+After changing OAuth scopes, log in again and reauthorize the application so that a new access token is issued with the updated permissions.
+
+Memory Issues
+
+The application is configured with:
+
+spring.codec.max-in-memory-size=50MB
+
+If very large API responses are received, this value may need to be increased.
+
+Enable Security Debug Logging
+
+For OAuth2 troubleshooting:
+
+logging.level.org.springframework.security=DEBUG
+
+Check the application console for authentication and authorization details.
+
+19. Security Best Practices
+
+Never commit the following to GitHub:
+
+Google Client Secret
+Google Client ID
+Access Tokens
+Refresh Tokens
+Passwords
+API Keys
+
+Use environment variables:
+
+spring.security.oauth2.client.registration.google.client-id=${GOOGLE_CLIENT_ID}
+spring.security.oauth2.client.registration.google.client-secret=${GOOGLE_CLIENT_SECRET}
+
+Add the following to .gitignore:
+
+target/
+*.class
+.env
+application-local.properties
+20. Future Enhancements
+
+The application can be extended with:
+
+Course filtering by date
+Filtering by submission status
+Web-based dashboard
+Custom report formats
+Excel export
+Scheduled automatic reports
+Email notifications
+Batch-wise analytics
+Student performance statistics
+Pagination for large Classroom datasets
+Admin dashboard
+Export history
+Report download functionality
+21. Benefits
+
+The application provides an automated way to:
+
+Reduce manual Classroom data collection
+Track student submissions
+Generate batch-wise reports
+Maintain CSV backups
+Generate Google Sheets automatically
+Store reports in Google Drive
+Centralize student engagement information
+22. Conclusion
+
+The Google Classroom Grade & Submission Data Exporter provides an automated solution for collecting student and coursework information from Google Classroom and converting it into structured reports.
+
+By integrating Spring Boot, Spring Security OAuth2, Google Classroom API, Google Sheets API, Google Drive API, WebClient, and OpenCSV, the application provides a modular and extensible backend for generating student engagement and submission reports.
+
+The architecture can be further extended to support dashboards, analytics, scheduled reports, Excel exports, and additional Google Workspace integrations.
+
+Author
+
+Google Classroom Report Generation Project
+
+Built using:
+
+Java
+Spring Boot
+Spring Security OAuth2
+Google Classroom API
+Google Sheets API
+Google Drive API
+WebClient
+OpenCSV
+Maven
