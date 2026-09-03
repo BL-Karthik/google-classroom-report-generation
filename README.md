@@ -1,8 +1,5 @@
 
 
-[google-classroom-documentation (2).pdf]
-
-
 #  Google Classroom Grade & Submission Exporter
 
 <p align="center">
