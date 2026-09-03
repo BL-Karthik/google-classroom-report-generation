@@ -1,4 +1,4 @@
-#  Google Classroom Grade & Submission Exporter
+# Google Classroom Report Generation
 
 <p align="center">
   <strong>Automated Student Engagement & Submission Reporting System</strong>
