@@ -1,0 +1,44 @@
+
+======================================
+ GOOGLE CLASSROOM GRADE EXPORTER
+======================================
+
+======================================
+GOOGLE SHEETS ACCESS TEST
+======================================
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Checking spreadsheet: B1: 1fZsJPXt_6V5e7KnHO0MLE_ihbwrXtI3Ae0Md060bD2Q
+OK - Title: B1 Batch
+
+Checking spreadsheet: B2: 1jgmFkPIFFp71c2EPWMwCXOJ6bG_irJYxFn1rSAoTf_I
+OK - Title: B2 Batch
+
+Google Sheets access confirmed.
+
+======================================
+APPLICATION ERROR
+======================================
+org.openqa.selenium.SessionNotCreatedException: Could not start a new session. Response code 500. Message: session not created: DevToolsActivePort file doesn't exist 
+Host info: host: 'KARTHIKREDDY', ip: '192.168.0.134'
+Build info: version: '4.35.0', revision: '1c58e5028b'
+System info: os.name: 'Windows 11', os.arch: 'amd64', os.version: '10.0', java.version: '21.0.7'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Command: [null, newSession {capabilities=[Capabilities {browserName: chrome, goog:chromeOptions: {args: [--user-data-dir=C:\Users\ka..., --profile-directory=Profile 55, --start-maximized, --disable-extensions, --remote-allow-origins=*], binary: C:\Program Files\Google\Chr..., extensions: []}}]}]
+	at org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:114)
+	at org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:75)
+	at org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:61)
+	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:187)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.invokeExecute(DriverCommandExecutor.java:216)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:174)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:557)
+	at org.openqa.selenium.remote.RemoteWebDriver.startSession(RemoteWebDriver.java:246)
+	at org.openqa.selenium.remote.RemoteWebDriver.<init>(RemoteWebDriver.java:174)
+	at org.openqa.selenium.chromium.ChromiumDriver.<init>(ChromiumDriver.java:99)
+	at org.openqa.selenium.chrome.ChromeDriver.<init>(ChromeDriver.java:88)
+	at org.openqa.selenium.chrome.ChromeDriver.<init>(ChromeDriver.java:83)
+	at org.openqa.selenium.chrome.ChromeDriver.<init>(ChromeDriver.java:72)
+	at com.example.ClassroomMultiExport.createDriver(ClassroomMultiExport.java:849)
+	at com.example.ClassroomMultiExport.main(ClassroomMultiExport.java:66)
+	at org.codehaus.mojo.exec.ExecJavaMojo$1.run(ExecJavaMojo.java:279)
+	at java.base/java.lang.Thread.run(Thread.java:1583)

@@ -1,0 +1,70 @@
+
+======================================
+ GOOGLE CLASSROOM GRADE EXPORTER
+======================================
+
+======================================
+GOOGLE SHEETS ACCESS TEST
+======================================
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Checking spreadsheet: B1: 1fZsJPXt_6V5e7KnHO0MLE_ihbwrXtI3Ae0Md060bD2Q
+OK - Title: classroomreport
+
+Checking spreadsheet: B2: 1jgmFkPIFFp71c2EPWMwCXOJ6bG_irJYxFn1rSAoTf_I
+OK - Title: Classroom Grades Export
+
+Google Sheets access confirmed.
+Sept 12, 2026 11:05:04 AM org.openqa.selenium.devtools.CdpVersionFinder findNearestMatch
+WARNING: Unable to find CDP implementation matching 153
+Sept 12, 2026 11:05:04 AM org.openqa.selenium.chromium.ChromiumDriver lambda$new$4
+WARNING: Unable to find version of CDP to use for 153.0.8010.37. You may need to include a dependency on a specific version of the CDP using something similar to `org.seleniumhq.selenium:selenium-devtools-v86:4.35.0` where the version ("v86") matches the version of the chromium-based browser you're using and the version number of the artifact is the same as Selenium's.
+
+Opening Google Classroom home...
+Classroom home loaded.
+
+======================================
+CLASSROOMS FOUND: 4
+======================================
+1. EExperiment
+2. BB2P3-603C1 - SRM Semester 3 - Classroom 100 Coding Hours Practice
+3. BB1P3-603C1 - SRM Semester 3 - Classroom 100 Coding Hours Practice
+4. SSTEP - Semester 3 - L1 - Master Classroom AY2025-29C1 - SRM Semester 3 - Master Classroom 100 CodIn Hours Practice
+
+--------------------------------------
+COURSE 1/4: EExperiment
+--------------------------------------
+Skipping - course name does not start with B1 or B2.
+
+--------------------------------------
+COURSE 2/4: BB2P3-603C1 - SRM Semester 3 - Classroom 100 Coding Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 10
+Students found: 68
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 3/4: BB1P3-603C1 - SRM Semester 3 - Classroom 100 Coding Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 10
+Students found: 66
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 4/4: SSTEP - Semester 3 - L1 - Master Classroom AY2025-29C1 - SRM Semester 3 - Master Classroom 100 CodIn Hours Practice
+--------------------------------------
+Skipping - course name does not start with B1 or B2.
+
+======================================
+EXPORT COMPLETED FOR 2/4 CLASSROOMS
+======================================
+
+Chrome closed.
