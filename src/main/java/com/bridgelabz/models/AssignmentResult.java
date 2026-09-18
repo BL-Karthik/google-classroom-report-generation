@@ -1,4 +1,4 @@
-package com.example.models;
+package com.bridgelabz.models;
 
 public class AssignmentResult {
 
