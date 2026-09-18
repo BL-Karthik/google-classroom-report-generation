@@ -1,7 +1,6 @@
-package com.example.service;
+package com.bridgelabz.service;
 
-import com.example.ClassroomMultiExport;
-import com.example.models.*;
+import com.bridgelabz.models.*;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 
@@ -9,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static com.example.ClassroomMultiExport.safeString;
-import static com.example.service.GradeBookService.waitUntilLoaded;
+import static com.bridgelabz.ClassroomMultiExport.safeString;
+import static com.bridgelabz.service.GradeBookService.waitUntilLoaded;
 
 public class StudentService {
     public  static List<StudentRawData> extractStudents(
