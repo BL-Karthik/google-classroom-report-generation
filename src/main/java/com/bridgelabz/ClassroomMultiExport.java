@@ -1,26 +1,24 @@
-package com.example;
-
-import com.example.models.*;
-import com.example.service.BrowserService;
-import com.example.service.CourseService;
-import com.example.service.GoogleSheetService;
+package com.bridgelabz;
+import com.bridgelabz.models.*;
+import com.bridgelabz.service.BrowserService;
+import com.bridgelabz.service.CourseService;
+import com.bridgelabz.service.GoogleSheetService;
+import com.bridgelabz.service.SummaryService;
 import org.openqa.selenium.*;
-
 import java.util.*;
-
-import static com.example.service.AssignmentService.getAssignments;
-import static com.example.service.CourseService.*;
-import static com.example.service.GradeBookService.clickGradesTab;
-import static com.example.service.GradeBookService.waitForGradebook;
-import static com.example.service.StudentService.extractStudents;
-import static com.example.service.StudentService.processStudents;
+import static com.bridgelabz.service.AssignmentService.getAssignments;
+import static com.bridgelabz.service.CourseService.*;
+import static com.bridgelabz.service.GradeBookService.clickGradesTab;
+import static com.bridgelabz.service.GradeBookService.waitForGradebook;
+import static com.bridgelabz.service.StudentService.extractStudents;
+import static com.bridgelabz.service.StudentService.processStudents;
 
 public class ClassroomMultiExport {
 
     /*
      * B1 courses (name starts with B1/BB1)
-     * export to the B1 spreadsheet; B2
-     * courses to the B2 spreadsheet.
+     * export to the B1 spreadsheet;
+     * B2 courses to the B2 spreadsheet.
      */
     private static final String SPREADSHEET_ID_B1 =
             "1fZsJPXt_6V5e7KnHO0MLE_ihbwrXtI3Ae0Md060bD2Q";
@@ -39,7 +37,6 @@ public class ClassroomMultiExport {
     private static final String PROFILE =
             "C:\\Users\\karth\\SeleniumClassroomMain";
 
-    // Signed in as karthik.reddy@bridgelabz.com
     private static final String CHROME_PROFILE_DIR =
             "Profile 55";
 
@@ -57,6 +54,7 @@ public class ClassroomMultiExport {
         System.out.println("\n======================================");
         System.out.println(" GOOGLE CLASSROOM GRADE EXPORTER");
         System.out.println("======================================");
+
 
         try {
 
@@ -132,10 +130,12 @@ public class ClassroomMultiExport {
                         new HashSet<>();
 
                 int exported = 0;
-
+                List<CourseSummary>b1summaries=new ArrayList<>();
+                List<CourseSummary>b2summaries=new ArrayList<>();
                 for (int i = 0;
                      i < courses.size();
-                     i++) {
+                     i++)
+                {
 
                     CourseInfo course =
                             courses.get(i);
@@ -233,6 +233,20 @@ public class ClassroomMultiExport {
                             continue;
                         }
 
+                        String spread_Sheet_Id= CourseService.routeSpreadsheetId(course.name);
+
+                        for(StudentData student:students) {
+                            CourseSummary summary = SummaryService.createSummary(course, student);
+
+
+                            if (spread_Sheet_Id.equals(SPREADSHEET_ID_B1)) {
+                                b1summaries.add(summary);
+                            } else if (spread_Sheet_Id.equals(SPREADSHEET_ID_B2)) {
+                                b2summaries.add(summary);
+                            }
+                        }
+
+
                         String tabName =
                                 uniqueTabName(
                                         sanitizeTabName(
@@ -260,6 +274,8 @@ public class ClassroomMultiExport {
                         e.printStackTrace();
                     }
                 }
+                SummaryService.exportToSummarySheet(SPREADSHEET_ID_B1,"Summary",b1summaries);
+                SummaryService.exportToSummarySheet(SPREADSHEET_ID_B2,"summary",b2summaries);
 
                 System.out.println("\n======================================");
                 System.out.println("EXPORT COMPLETED FOR "
@@ -324,21 +340,5 @@ public class ClassroomMultiExport {
                 ? ""
                 : String.valueOf(object).trim();
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
