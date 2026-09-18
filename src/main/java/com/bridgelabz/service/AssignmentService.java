@@ -1,7 +1,6 @@
-package com.example.service;
+package com.bridgelabz.service;
 
-import com.example.ClassroomMultiExport;
-import com.example.models.AssignmentColumn;
+import com.bridgelabz.models.AssignmentColumn;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 
@@ -9,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static com.example.ClassroomMultiExport.safeString;
+import static com.bridgelabz.ClassroomMultiExport.safeString;
 
 public class AssignmentService {
 
