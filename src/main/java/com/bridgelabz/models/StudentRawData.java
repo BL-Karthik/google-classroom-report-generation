@@ -1,6 +1,4 @@
-package com.example.models;
-
-import com.example.ClassroomMultiExport;
+package com.bridgelabz.models;
 
 import java.util.ArrayList;
 import java.util.List;
