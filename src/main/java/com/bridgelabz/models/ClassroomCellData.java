@@ -1,4 +1,4 @@
-package com.example.models;
+package com.bridgelabz.models;
 
 import java.util.ArrayList;
 import java.util.List;
