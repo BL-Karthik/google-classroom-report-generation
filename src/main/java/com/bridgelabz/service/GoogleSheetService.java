@@ -1,8 +1,7 @@
-package com.example.service;
+package com.bridgelabz.service;
 
-import com.example.ClassroomMultiExport;
-import com.example.models.AssignmentColumn;
-import com.example.models.StudentData;
+import com.bridgelabz.models.AssignmentColumn;
+import com.bridgelabz.models.StudentData;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.SheetsScopes;
@@ -559,6 +558,150 @@ public class GoogleSheetService {
                                                                                 new NumberFormat()
                                                                                         .setType("PERCENT")
                                                                                         .setPattern("0%")
+                                                                        )
+                                                        )
+                                        )
+                                        .setFields(
+                                                "userEnteredFormat.numberFormat"
+                                        )
+                        )
+        );
+
+        sheets.spreadsheets()
+                .batchUpdate(
+                        spreadsheetId,
+                        new BatchUpdateSpreadsheetRequest()
+                                .setRequests(requests)
+                )
+                .execute();
+    }
+
+    public  static void summaryFormatSheet(
+            Sheets sheets,
+            String spreadsheetId,
+            int sheetId,
+            int rows,
+            int columns) throws Exception {
+
+        List<Request> requests =
+                new ArrayList<>();
+
+        // Bold header
+        requests.add(
+                new Request()
+                        .setRepeatCell(
+                                new RepeatCellRequest()
+                                        .setRange(
+                                                new GridRange()
+                                                        .setSheetId(sheetId)
+                                                        .setStartRowIndex(0)
+                                                        .setEndRowIndex(1)
+                                                        .setStartColumnIndex(0)
+                                                        .setEndColumnIndex(columns)
+                                        )
+                                        .setCell(
+                                                new com.google.api.services.sheets.v4.model.CellData()
+                                                        .setUserEnteredFormat(
+                                                                new CellFormat()
+                                                                        .setTextFormat(
+                                                                                new TextFormat()
+                                                                                        .setBold(true)
+                                                                        )
+                                                        )
+                                        )
+                                        .setFields(
+                                                "userEnteredFormat.textFormat.bold"
+                                        )
+                        )
+        );
+
+        // Freeze first row
+        requests.add(
+                new Request()
+                        .setUpdateSheetProperties(
+                                new UpdateSheetPropertiesRequest()
+                                        .setProperties(
+                                                new SheetProperties()
+                                                        .setSheetId(sheetId)
+                                                        .setGridProperties(
+                                                                new GridProperties()
+                                                                        .setFrozenRowCount(1)
+                                                        )
+                                        )
+                                        .setFields(
+                                                "gridProperties.frozenRowCount"
+                                        )
+                        )
+        );
+
+        // Auto resize
+        requests.add(
+                new Request()
+                        .setAutoResizeDimensions(
+                                new AutoResizeDimensionsRequest()
+                                        .setDimensions(
+                                                new DimensionRange()
+                                                        .setSheetId(sheetId)
+                                                        .setDimension("COLUMNS")
+                                                        .setStartIndex(0)
+                                                        .setEndIndex(columns)
+                                        )
+                        )
+        );
+
+        // Percent format on the Percentage
+        // column (last header column) so the
+        // formula shows e.g. "70%" not "0.7".
+        requests.add(
+                new Request()
+                        .setRepeatCell(
+                                new RepeatCellRequest()
+                                        .setRange(
+                                                new GridRange()
+                                                        .setSheetId(sheetId)
+                                                        .setStartRowIndex(1)
+                                                        .setEndRowIndex(rows)
+                                                        .setStartColumnIndex(4)
+                                                        .setEndColumnIndex(5)
+                                        )
+                                        .setCell(
+                                                new com.google.api.services.sheets.v4.model.CellData()
+                                                        .setUserEnteredFormat(
+                                                                new CellFormat()
+                                                                        .setNumberFormat(
+                                                                                new NumberFormat()
+                                                                                        .setType("PERCENT")
+                                                                                        .setPattern("0%")
+                                                                        )
+                                                        )
+                                        )
+                                        .setFields(
+                                                "userEnteredFormat.numberFormat"
+                                        )
+                        )
+        );
+
+        requests.add(
+                new Request()
+                        .setRepeatCell(
+                                new RepeatCellRequest()
+                                        .setRange(
+                                                new GridRange()
+                                                        .setSheetId(sheetId)
+                                                        .setStartRowIndex(1)
+                                                        .setEndRowIndex(rows)
+                                                        .setStartColumnIndex(3)
+                                                        .setEndColumnIndex(4)
+                                        )
+                                        .setCell(
+                                                new com.google.api.services.sheets.v4.model.CellData()
+                                                        .setUserEnteredFormat(
+                                                                new CellFormat()
+                                                                        .setNumberFormat(
+                                                                                new NumberFormat()
+                                                                                        .setType("NUMBER")
+
+                                                                                        .setPattern("0")
                                                                         )
                                                         )
                                         )
