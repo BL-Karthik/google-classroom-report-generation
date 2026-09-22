@@ -1,0 +1,1044 @@
+
+======================================
+ GOOGLE CLASSROOM GRADE EXPORTER
+======================================
+
+======================================
+GOOGLE SHEETS ACCESS TEST
+======================================
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Checking spreadsheet: B1: 1fZsJPXt_6V5e7KnHO0MLE_ihbwrXtI3Ae0Md060bD2Q
+OK - Title: B1 Batch
+
+Checking spreadsheet: B2: 1jgmFkPIFFp71c2EPWMwCXOJ6bG_irJYxFn1rSAoTf_I
+OK - Title: B2 Batch
+
+Google Sheets access confirmed.
+Sept 12, 2026 4:06:43 PM org.openqa.selenium.devtools.CdpVersionFinder findNearestMatch
+WARNING: Unable to find CDP implementation matching 153
+Sept 12, 2026 4:06:43 PM org.openqa.selenium.chromium.ChromiumDriver lambda$new$4
+WARNING: Unable to find version of CDP to use for 153.0.8010.37. You may need to include a dependency on a specific version of the CDP using something similar to `org.seleniumhq.selenium:selenium-devtools-v86:4.35.0` where the version ("v86") matches the version of the chromium-based browser you're using and the version number of the artifact is the same as Selenium's.
+
+Opening Google Classroom home...
+Classroom home loaded.
+
+======================================
+CLASSROOMS FOUND: 84
+======================================
+1. BB2P3-603C1 - SRM Semester 3 - Classroom 100 Coding Hours Practice
+2. BB1P3-603C1 - SRM Semester 3 - Classroom 100 Coding Hours Practice
+3. BB2P2-602C1 - SRM Semester 3 - Classroom 100 Coding Hours Practice
+4. BB1P2-602C1 - SRM Semester 3 - Classroom 100 Coding Hours Practice
+5. BB2P1-601C1 - SRM Semester 3 - Classroom 100 Coding Hours Practice
+6. BB1P1-601C1 - SRM Semester 3 - Classroom 100 Coding Hours Practice
+7. BB2P8-703C2 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+8. BB2P7-702C2 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+9. BB2P6-701C2 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+10. BB2P5-606C2 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+11. BB2P4-605C2 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+12. BB1P9-704C2 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+13. BB1P8-703C2 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+14. BB1P7-702C2 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+15. BB1P6-701C2 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+16. BB1P5-606C2 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+17. BB1P4-605C2 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+18. BB2P40-1206C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+19. BB2P39-1205C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+20. BB2P38-1204C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+21. BB2P37-1203C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+22. BB2P36-1202C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+23. BB2P35-1201C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+24. BB2P34-1105C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+25. BB2P33-1104C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+26. BB2P32-1103C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+27. BB2P31-1102C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+28. BB2P30-1101C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+29. BB2P29-1006C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+30. BB2P28-1005C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+31. BB2P27-1004C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+32. BB2P26-1003C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+33. BB2P25-1002C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+34. BB2P24-1001C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+35. BB2P23-906C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+36. BB2P22-905C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+37. BB2P21-904C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+38. BB2P20-903C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+39. BB2P19-902C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+40. BB2P18-901C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+41. BB2P17-806C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+42. BB2P16-805C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+43. BB2P15-804C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+44. BB2P14-803C3 - SRM Semester 3 -  Classroom 100 CodIn Hours Practice
+45. BB2P13-802C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+46. BB2P12-801C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+47. BB2P11-706C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+48. BB2P10-705C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+49. BB2P9-704C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+50. BB1P40-1206C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+51. BB1P39-1205C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+52. BB1P38-1204C3 - SRM Semester 3 -  Classroom 100 CodIn Hours Practice
+53. BB1P37-1203C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+54. BB1P36-1202C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+55. BB1P35-1201C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+56. BB1P34-1105C3 - SRM Semester 3 -Classroom 100 CodIn Hours Practice
+57. BB1P33-1104C3 - SRM Semester 3 -Classroom 100 CodIn Hours Practice
+58. BB1P32-1103C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+59. BB1P31-1102C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+60. BB1P30-1101C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+61. BB1P29-1006C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+62. BB1P28-1005C3 - SRM Semester 3 - Master Classroom 100 CodIn Hours Practice
+63. BB1P27-1004C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+64. BB1P26-1003C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+65. BB1P25-1002C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+66. BB1P24-1001C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+67. BB1P23-906C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+68. BBC3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+69. BB1P22-905C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+70. BB1P21-904C3 - SRM Semester 3 - Master Classroom 100 CodIn Hours Practice
+71. BB1P20-903C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+72. BB1P19-902C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+73. BB1P18-901C3 - SRM Semester 3 -  Classroom 100 CodIn Hours Practice
+74. BB1P17-806C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+75. BB1P16-805C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+76. BB1P15-804C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+77. BB1P14-803C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+78. BB1P13-802C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+79. BB1P12-801C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+80. BB1P11-706C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+81. BB1P10-705C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+82. SSTEP - Semester 3 - L3 - Master Classroom AY2025-29C3 - SRM Semester 3 - Master Classroom 100 CodIn Hours Practice
+83. SSTEP - Semester 3 - L2 - Master Classroom AY2025-29C2 - SRM Semester 3 - Master Classroom 100 CodIn Hours Practice
+84. SSTEP - Semester 3 - L1 - Master Classroom AY2025-29C1 - SRM Semester 3 - Master Classroom 100 CodIn Hours Practice
+
+--------------------------------------
+COURSE 1/84: BB2P3-603C1 - SRM Semester 3 - Classroom 100 Coding Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 12
+Students found: 68
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 2/84: BB1P3-603C1 - SRM Semester 3 - Classroom 100 Coding Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 12
+Students found: 66
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 3/84: BB2P2-602C1 - SRM Semester 3 - Classroom 100 Coding Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 11
+Students found: 66
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 4/84: BB1P2-602C1 - SRM Semester 3 - Classroom 100 Coding Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 12
+Students found: 68
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 5/84: BB2P1-601C1 - SRM Semester 3 - Classroom 100 Coding Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 11
+Students found: 68
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 6/84: BB1P1-601C1 - SRM Semester 3 - Classroom 100 Coding Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 11
+Students found: 70
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 7/84: BB2P8-703C2 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 11
+Students found: 63
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 8/84: BB2P7-702C2 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 12
+Students found: 65
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 9/84: BB2P6-701C2 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 12
+Students found: 65
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 10/84: BB2P5-606C2 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 10
+Students found: 67
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 11/84: BB2P4-605C2 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 11
+Students found: 66
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 12/84: BB1P9-704C2 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 11
+Students found: 63
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 13/84: BB1P8-703C2 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 12
+Students found: 65
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 14/84: BB1P7-702C2 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 12
+Students found: 68
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Google Sheets export failed.
+java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:318)
+	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:346)
+	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:796)
+	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:1099)
+	at java.base/sun.security.ssl.SSLSocketInputRecord.read(SSLSocketInputRecord.java:489)
+	at java.base/sun.security.ssl.SSLSocketInputRecord.readHeader(SSLSocketInputRecord.java:483)
+	at java.base/sun.security.ssl.SSLSocketInputRecord.bytesInCompletePacket(SSLSocketInputRecord.java:70)
+	at java.base/sun.security.ssl.SSLSocketImpl.readApplicationRecord(SSLSocketImpl.java:1461)
+	at java.base/sun.security.ssl.SSLSocketImpl$AppInputStream.read(SSLSocketImpl.java:1066)
+	at java.base/java.io.BufferedInputStream.fill(BufferedInputStream.java:291)
+	at java.base/java.io.BufferedInputStream.read1(BufferedInputStream.java:347)
+	at java.base/java.io.BufferedInputStream.implRead(BufferedInputStream.java:420)
+	at java.base/java.io.BufferedInputStream.read(BufferedInputStream.java:399)
+	at java.base/sun.net.www.http.HttpClient.parseHTTPHeader(HttpClient.java:827)
+	at java.base/sun.net.www.http.HttpClient.parseHTTP(HttpClient.java:759)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1705)
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1614)
+	at java.base/java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:531)
+	at java.base/sun.net.www.protocol.https.HttpsURLConnectionImpl.getResponseCode(HttpsURLConnectionImpl.java:307)
+	at com.google.api.client.http.javanet.NetHttpResponse.<init>(NetHttpResponse.java:36)
+	at com.google.api.client.http.javanet.NetHttpRequest.execute(NetHttpRequest.java:152)
+	at com.google.api.client.http.javanet.NetHttpRequest.execute(NetHttpRequest.java:84)
+	at com.google.api.client.http.HttpRequest.execute(HttpRequest.java:1012)
+	at com.google.api.client.googleapis.services.AbstractGoogleClientRequest.executeUnparsed(AbstractGoogleClientRequest.java:514)
+	at com.google.api.client.googleapis.services.AbstractGoogleClientRequest.executeUnparsed(AbstractGoogleClientRequest.java:455)
+	at com.google.api.client.googleapis.services.AbstractGoogleClientRequest.execute(AbstractGoogleClientRequest.java:565)
+	at com.bridgelabz.ClassroomMultiExport.exportToGoogleSheets(ClassroomMultiExport.java:589)
+	at com.bridgelabz.ClassroomMultiExport.main(ClassroomMultiExport.java:230)
+	at org.codehaus.mojo.exec.ExecJavaMojo$1.run(ExecJavaMojo.java:279)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+--------------------------------------
+COURSE 15/84: BB1P6-701C2 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 12
+Students found: 65
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 16/84: BB1P5-606C2 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 10
+Students found: 68
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 17/84: BB1P4-605C2 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 12
+Students found: 70
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 18/84: BB2P40-1206C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 10
+Students found: 43
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 19/84: BB2P39-1205C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 10
+Students found: 51
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 20/84: BB2P38-1204C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 8
+Students found: 50
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 21/84: BB2P37-1203C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 12
+Students found: 55
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 22/84: BB2P36-1202C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 8
+Students found: 51
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 23/84: BB2P35-1201C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 10
+Students found: 51
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 24/84: BB2P34-1105C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 10
+Students found: 55
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 25/84: BB2P33-1104C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 8
+Students found: 53
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 26/84: BB2P32-1103C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 8
+Students found: 56
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 27/84: BB2P31-1102C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 10
+Students found: 55
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 28/84: BB2P30-1101C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 8
+Students found: 55
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 29/84: BB2P29-1006C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 8
+Students found: 53
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 30/84: BB2P28-1005C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 9
+Students found: 54
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 31/84: BB2P27-1004C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 10
+Students found: 62
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 32/84: BB2P26-1003C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 8
+Students found: 53
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 33/84: BB2P25-1002C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 8
+Students found: 50
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 34/84: BB2P24-1001C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 10
+Students found: 60
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 35/84: BB2P23-906C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 10
+Students found: 60
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 36/84: BB2P22-905C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 9
+Students found: 62
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 37/84: BB2P21-904C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 10
+Students found: 68
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 38/84: BB2P20-903C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 10
+Students found: 67
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 39/84: BB2P19-902C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 10
+Students found: 67
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 40/84: BB2P18-901C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 10
+Students found: 66
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 41/84: BB2P17-806C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 10
+Students found: 65
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 42/84: BB2P16-805C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 9
+Students found: 67
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 43/84: BB2P15-804C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 8
+Students found: 67
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 44/84: BB2P14-803C3 - SRM Semester 3 -  Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 10
+Students found: 64
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 45/84: BB2P13-802C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 10
+Students found: 67
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 46/84: BB2P12-801C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 10
+Students found: 65
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 47/84: BB2P11-706C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 9
+Students found: 65
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 48/84: BB2P10-705C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 8
+Students found: 63
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 49/84: BB2P9-704C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 9
+Students found: 62
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 50/84: BB1P40-1206C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 10
+Students found: 57
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 51/84: BB1P39-1205C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab not found.
+Skipping - no Grades tab.
+
+--------------------------------------
+COURSE 52/84: BB1P38-1204C3 - SRM Semester 3 -  Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 9
+Students found: 58
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 53/84: BB1P37-1203C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 12
+Students found: 53
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 54/84: BB1P36-1202C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 9
+Students found: 50
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 55/84: BB1P35-1201C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 10
+Students found: 53
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 56/84: BB1P34-1105C3 - SRM Semester 3 -Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 10
+Students found: 57
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 57/84: BB1P33-1104C3 - SRM Semester 3 -Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 12
+Students found: 59
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 58/84: BB1P32-1103C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 10
+Students found: 67
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 59/84: BB1P31-1102C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 10
+Students found: 57
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 60/84: BB1P30-1101C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 10
+Students found: 62
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 61/84: BB1P29-1006C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 8
+Students found: 61
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 62/84: BB1P28-1005C3 - SRM Semester 3 - Master Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 9
+Students found: 61
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 63/84: BB1P27-1004C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 10
+Students found: 65
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 64/84: BB1P26-1003C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 8
+Students found: 68
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 65/84: BB1P25-1002C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 8
+Students found: 69
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 66/84: BB1P24-1001C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 10
+Students found: 68
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 67/84: BB1P23-906C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 10
+Students found: 63
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 68/84: BBC3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Skipping - course name does not start with B1 or B2.
+
+--------------------------------------
+COURSE 69/84: BB1P22-905C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 10
+Students found: 65
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 70/84: BB1P21-904C3 - SRM Semester 3 - Master Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 10
+Students found: 66
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 71/84: BB1P20-903C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 12
+Students found: 66
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 72/84: BB1P19-902C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 10
+Students found: 68
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 73/84: BB1P18-901C3 - SRM Semester 3 -  Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 10
+Students found: 68
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 74/84: BB1P17-806C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 10
+Students found: 65
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 75/84: BB1P16-805C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 10
+Students found: 69
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 76/84: BB1P15-804C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 10
+Students found: 64
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 77/84: BB1P14-803C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 10
+Students found: 67
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 78/84: BB1P13-802C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 10
+Students found: 68
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 79/84: BB1P12-801C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 10
+Students found: 68
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 80/84: BB1P11-706C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 10
+Students found: 68
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 81/84: BB1P10-705C3 - SRM Semester 3 - Classroom 100 CodIn Hours Practice
+--------------------------------------
+Grades tab clicked.
+Gradebook loaded.
+Assignments found: 10
+Students found: 64
+Authenticated Service Account: classroom-export-service@long-parity-508115-u7.iam.gserviceaccount.com
+
+Data exported to Google Sheets.
+
+--------------------------------------
+COURSE 82/84: SSTEP - Semester 3 - L3 - Master Classroom AY2025-29C3 - SRM Semester 3 - Master Classroom 100 CodIn Hours Practice
+--------------------------------------
+Skipping - course name does not start with B1 or B2.
+
+--------------------------------------
+COURSE 83/84: SSTEP - Semester 3 - L2 - Master Classroom AY2025-29C2 - SRM Semester 3 - Master Classroom 100 CodIn Hours Practice
+--------------------------------------
+Skipping - course name does not start with B1 or B2.
+
+--------------------------------------
+COURSE 84/84: SSTEP - Semester 3 - L1 - Master Classroom AY2025-29C1 - SRM Semester 3 - Master Classroom 100 CodIn Hours Practice
+--------------------------------------
+Skipping - course name does not start with B1 or B2.
+
+======================================
+EXPORT COMPLETED FOR 78/84 CLASSROOMS
+======================================
+
+Chrome closed.

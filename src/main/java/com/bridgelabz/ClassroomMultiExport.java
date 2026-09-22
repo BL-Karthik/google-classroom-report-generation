@@ -21,10 +21,10 @@ public class ClassroomMultiExport {
      * B2 courses to the B2 spreadsheet.
      */
     private static final String SPREADSHEET_ID_B1 =
-            "1fZsJPXt_6V5e7KnHO0MLE_ihbwrXtI3Ae0Md060bD2Q";
+            "1aynR_u0F0kOkDgnSet3814jasrmuk1btMtdfDOD72ac";
 
     private static final String SPREADSHEET_ID_B2 =
-            "1jgmFkPIFFp71c2EPWMwCXOJ6bG_irJYxFn1rSAoTf_I";
+            "1hYUmjJ3V6gfguvcHCZJFkmLN7Gi5Yd2YBg6xeDJHFEk";
 
     private static final String SERVICE_ACCOUNT_FILE =
             "service_account.json";
@@ -169,11 +169,11 @@ public class ClassroomMultiExport {
                      */
                     try {
 
-                        String spreadsheetId =
+                        String spread_sheet_Id =
                                 routeSpreadsheetId(
                                         course.name);
 
-                        if (spreadsheetId == null) {
+                        if (spread_sheet_Id == null) {
 
                             System.out.println(
                                     "Skipping - course name does "
@@ -233,15 +233,13 @@ public class ClassroomMultiExport {
                             continue;
                         }
 
-                        String spread_Sheet_Id= CourseService.routeSpreadsheetId(course.name);
-
                         for(StudentData student:students) {
                             CourseSummary summary = SummaryService.createSummary(course, student);
 
 
-                            if (spread_Sheet_Id.equals(SPREADSHEET_ID_B1)) {
+                            if (spread_sheet_Id.equals(SPREADSHEET_ID_B1)) {
                                 b1summaries.add(summary);
-                            } else if (spread_Sheet_Id.equals(SPREADSHEET_ID_B2)) {
+                            } else if (spread_sheet_Id.equals(SPREADSHEET_ID_B2)) {
                                 b2summaries.add(summary);
                             }
                         }
@@ -256,7 +254,7 @@ public class ClassroomMultiExport {
                                 );
 
                         if (GoogleSheetService.exportToGoogleSheets(
-                                spreadsheetId,
+                                spread_sheet_Id,
                                 tabName,
                                 assignments,
                                 students)) {

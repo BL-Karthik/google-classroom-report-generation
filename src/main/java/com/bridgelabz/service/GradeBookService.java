@@ -80,6 +80,11 @@ public class GradeBookService {
         // disappears when the last column is in).
         waitUntilLoaded(driver, 60);
 
+//        scrollGradebook(driver);
+//        // Wait for any assignments triggered by
+//        // scrolling to finish loading.
+//        waitUntilLoaded(driver, 60);
+
         System.out.println(
                 "Gradebook loaded."
         );

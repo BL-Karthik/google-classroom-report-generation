@@ -24,14 +24,22 @@ public class SummaryService {
 
         List<AssignmentResult> list= student.assignments;
 
-        for(AssignmentResult assignmentColumn:list)
-        {
-            if("Submitted".equals(assignmentColumn.status))
-            {
+
+        int totalAssignments = Math.min(10, list.size());
+
+        for (int i = 0; i < totalAssignments; i++) {
+
+            AssignmentResult assignmentColumn = list.get(i);
+
+            if ("Submitted".equals(assignmentColumn.status)) {
                 submitted++;
             }
         }
-        percentage_of_submissions=list.isEmpty()?0:(double) submitted/list.size();
+
+         percentage_of_submissions =
+                totalAssignments == 0
+                        ? 0
+                        : (double) submitted / totalAssignments;
 
         return new CourseSummary(courseName,
                 studentName,studentRollNumber,

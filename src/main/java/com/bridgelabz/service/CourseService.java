@@ -17,10 +17,10 @@ import static com.bridgelabz.ClassroomMultiExport.safeString;
 public class CourseService {
 
     private static final String SPREADSHEET_ID_B1 =
-            "1fZsJPXt_6V5e7KnHO0MLE_ihbwrXtI3Ae0Md060bD2Q";
+            "1aynR_u0F0kOkDgnSet3814jasrmuk1btMtdfDOD72ac";
 
     private static final String SPREADSHEET_ID_B2 =
-            "1jgmFkPIFFp71c2EPWMwCXOJ6bG_irJYxFn1rSAoTf_I";
+            "1hYUmjJ3V6gfguvcHCZJFkmLN7Gi5Yd2YBg6xeDJHFEk";
 
 
     private static final String HOME_URL =
