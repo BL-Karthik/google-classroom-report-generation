@@ -146,7 +146,9 @@ public class AssignmentService {
 
                     assignments.add(column);
                 }
+
             }
+            assignments.removeIf(assignment->assignment.title.toLowerCase().contains("npsfeedback"));
 
         } catch (Exception e) {
 

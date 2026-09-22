@@ -1,6 +1,8 @@
 package com.bridgelabz.service;
 
 import com.bridgelabz.models.AssignmentColumn;
+import com.bridgelabz.models.CourseInfo;
+import com.bridgelabz.models.CourseSummary;
 import com.bridgelabz.models.StudentData;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.services.sheets.v4.Sheets;
@@ -16,10 +18,9 @@ public class GoogleSheetService {
 
 
     private static final String SPREADSHEET_ID_B1 =
-            "1aynR_u0F0kOkDgnSet3814jasrmuk1btMtdfDOD72ac";
-
+            "1_ptnLvsphtf2WAER_oOBwCMcunKmvbguer0u_GUk_F8";
     private static final String SPREADSHEET_ID_B2 =
-            "1hYUmjJ3V6gfguvcHCZJFkmLN7Gi5Yd2YBg6xeDJHFEk";
+            "1waRl-38hE8NEROWbnTcJItDs8DuKnl6n-t107MWWa5w";
 
     private static final String SERVICE_ACCOUNT_FILE =
             "service_account.json";
@@ -211,7 +212,7 @@ public class GoogleSheetService {
             // Status column (grades are tracked in
             // the Classroom itself), followed by two
             // summary columns.
-            int statusCount = Math.min(assignments.size() - 4, 10);
+            int statusCount = Math.min(assignments.size() - 2, 12);
 
             List<Object> header =
                     new ArrayList<>();
@@ -717,5 +718,86 @@ public class GoogleSheetService {
                                 .setRequests(requests)
                 )
                 .execute();
+    }
+    public static List<CourseSummary> getSummariesFromSheet(
+            String spreadsheetId,
+            String tabName,
+            CourseInfo course) throws Exception {
+
+        Sheets sheets = createSheetsService();
+
+        ValueRange response =
+                sheets.spreadsheets()
+                        .values()
+                        .get(
+                                spreadsheetId,
+                                tabName + "!A2:D"
+                        )
+                        .setValueRenderOption("UNFORMATTED_VALUE")
+                        .execute();
+
+        List<List<Object>> rows = response.getValues();
+
+        List<CourseSummary> summaries =
+                new ArrayList<>();
+
+        if (rows == null || rows.isEmpty()) {
+            return summaries;
+        }
+
+        String[] courseNameArray =
+                course.name.split(" - ");
+
+        String courseName =
+                courseNameArray[0].trim();
+
+        if (!courseName.isEmpty()) {
+            courseName =
+                    courseName.substring(1);
+        }
+
+        for (List<Object> row : rows) {
+
+            if (row.size() < 4) {
+                continue;
+            }
+
+            String rollNumber =
+                    String.valueOf(row.get(0));
+
+            String studentName =
+                    String.valueOf(row.get(1));
+
+            int submissions =
+                    Integer.parseInt(
+                            String.valueOf(row.get(2))
+                    );
+
+            double percentage =
+                    Double.parseDouble(
+                            String.valueOf(row.get(3))
+                    );
+
+            CourseSummary summary =
+                    new CourseSummary(
+                            courseName,
+                            studentName,
+                            rollNumber,
+                            submissions,
+                            percentage
+                    );
+
+            summaries.add(summary);
+        }
+
+        System.out.println(
+                "Summary data read from sheet: "
+                        + tabName
+                        + " -> "
+                        + summaries.size()
+                        + " students"
+        );
+
+        return summaries;
     }
 }

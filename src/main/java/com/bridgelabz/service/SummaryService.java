@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static com.bridgelabz.service.GoogleSheetService.createSheetsService;
+
 public class SummaryService {
 
 
@@ -25,7 +27,7 @@ public class SummaryService {
         List<AssignmentResult> list= student.assignments;
 
 
-        int totalAssignments = Math.min(10, list.size());
+        int totalAssignments = Math.min(12, list.size());
 
         for (int i = 0; i < totalAssignments; i++) {
 
@@ -56,7 +58,7 @@ public class SummaryService {
 
         try {
 
-            Sheets sheets = GoogleSheetService.createSheetsService();
+            Sheets sheets = createSheetsService();
 
             String sheetName = tabName;
 
@@ -166,4 +168,5 @@ public class SummaryService {
             return false;
         }
     }
+
 }

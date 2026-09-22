@@ -1,11 +1,14 @@
 package com.bridgelabz;
+
 import com.bridgelabz.models.*;
 import com.bridgelabz.service.BrowserService;
 import com.bridgelabz.service.CourseService;
 import com.bridgelabz.service.GoogleSheetService;
 import com.bridgelabz.service.SummaryService;
 import org.openqa.selenium.*;
+
 import java.util.*;
+
 import static com.bridgelabz.service.AssignmentService.getAssignments;
 import static com.bridgelabz.service.CourseService.*;
 import static com.bridgelabz.service.GradeBookService.clickGradesTab;
@@ -20,11 +23,12 @@ public class ClassroomMultiExport {
      * export to the B1 spreadsheet;
      * B2 courses to the B2 spreadsheet.
      */
+
     private static final String SPREADSHEET_ID_B1 =
-            "1aynR_u0F0kOkDgnSet3814jasrmuk1btMtdfDOD72ac";
+            "1_ptnLvsphtf2WAER_oOBwCMcunKmvbguer0u_GUk_F8";
 
     private static final String SPREADSHEET_ID_B2 =
-            "1hYUmjJ3V6gfguvcHCZJFkmLN7Gi5Yd2YBg6xeDJHFEk";
+            "1waRl-38hE8NEROWbnTcJItDs8DuKnl6n-t107MWWa5w";
 
     private static final String SERVICE_ACCOUNT_FILE =
             "service_account.json";
@@ -55,20 +59,29 @@ public class ClassroomMultiExport {
         System.out.println(" GOOGLE CLASSROOM GRADE EXPORTER");
         System.out.println("======================================");
 
-
         try {
 
             // STEP 1 - Test Google Sheets access
             if (!GoogleSheetService.testGoogleSheetsAccess()) {
-                System.out.println("\nGoogle Sheets access failed.");
-                System.out.println("Fix Google Sheets permission first.");
+
+                System.out.println(
+                        "\nGoogle Sheets access failed."
+                );
+
+                System.out.println(
+                        "Fix Google Sheets permission first."
+                );
+
                 return;
             }
 
-            System.out.println("\nGoogle Sheets access confirmed.");
+            System.out.println(
+                    "\nGoogle Sheets access confirmed."
+            );
 
             // STEP 2 - Start Selenium
-            WebDriver driver = BrowserService.createDriver();
+            WebDriver driver =
+                    BrowserService.createDriver();
 
             try {
 
@@ -101,25 +114,40 @@ public class ClassroomMultiExport {
 
                     openClassroomHome(driver);
 
-                    courses = getCourses(driver);
+                    courses =
+                            getCourses(driver);
 
                     if (courses.isEmpty()) {
 
                         System.out.println(
-                                "Still no classrooms found on the home page."
+                                "Still no classrooms found on "
+                                        + "the home page."
                         );
 
                         return;
                     }
                 }
 
-                System.out.println("\n======================================");
-                System.out.println("CLASSROOMS FOUND: " + courses.size());
-                System.out.println("======================================");
+                System.out.println(
+                        "\n======================================"
+                );
 
-                for (int i = 0; i < courses.size(); i++) {
+                System.out.println(
+                        "CLASSROOMS FOUND: "
+                                + courses.size()
+                );
+
+                System.out.println(
+                        "======================================"
+                );
+
+                for (int i = 0;
+                     i < courses.size();
+                     i++) {
+
                     System.out.println(
-                            (i + 1) + ". "
+                            (i + 1)
+                                    + ". "
                                     + courses.get(i).name
                     );
                 }
@@ -130,12 +158,25 @@ public class ClassroomMultiExport {
                         new HashSet<>();
 
                 int exported = 0;
-                List<CourseSummary>b1summaries=new ArrayList<>();
-                List<CourseSummary>b2summaries=new ArrayList<>();
+
+                /*
+                 * IMPORTANT:
+                 *
+                 * These lists must be outside the
+                 * course loop.
+                 *
+                 * They collect summary data from
+                 * ALL B1 and B2 course sheets.
+                 */
+                List<CourseSummary> b1summaries =
+                        new ArrayList<>();
+
+                List<CourseSummary> b2summaries =
+                        new ArrayList<>();
+
                 for (int i = 0;
                      i < courses.size();
-                     i++)
-                {
+                     i++) {
 
                     CourseInfo course =
                             courses.get(i);
@@ -145,22 +186,37 @@ public class ClassroomMultiExport {
                      * name fragment as the first CLI
                      * argument to re-export only that
                      * course,
-                     *   mvn exec:java -Dexec.args="BB1P7-702C2"
+                     *
+                     * mvn exec:java
+                     * -Dexec.args="BB1P7-702C2"
                      */
                     if (args.length > 0
-                            && !course.name.replace(" ", "")
-                                    .contains(
-                                            args[0].replace(" ", ""))
-                    ) {
+                            && !course.name
+                            .replace(" ", "")
+                            .contains(
+                                    args[0]
+                                            .replace(" ", "")
+                            )) {
+
                         continue;
                     }
 
-                    System.out.println("\n--------------------------------------");
-                    System.out.println("COURSE "
-                            + (i + 1) + "/"
-                            + courses.size() + ": "
-                            + course.name);
-                    System.out.println("--------------------------------------");
+                    System.out.println(
+                            "\n--------------------------------------"
+                    );
+
+                    System.out.println(
+                            "COURSE "
+                                    + (i + 1)
+                                    + "/"
+                                    + courses.size()
+                                    + ": "
+                                    + course.name
+                    );
+
+                    System.out.println(
+                            "--------------------------------------"
+                    );
 
                     /*
                      * One broken course (timeout, UI
@@ -171,7 +227,8 @@ public class ClassroomMultiExport {
 
                         String spread_sheet_Id =
                                 routeSpreadsheetId(
-                                        course.name);
+                                        course.name
+                                );
 
                         if (spread_sheet_Id == null) {
 
@@ -184,19 +241,23 @@ public class ClassroomMultiExport {
                         }
 
                         driver.get(
-                                HOME_URL + "c/"
+                                HOME_URL
+                                        + "c/"
                                         + course.id
                         );
 
                         if (!clickGradesTab(driver)) {
+
                             System.out.println(
                                     "Skipping - no Grades tab."
                             );
+
                             continue;
                         }
 
                         waitForGradebook(driver);
 
+                        // Get assignments
                         List<AssignmentColumn> assignments =
                                 getAssignments(driver);
 
@@ -205,6 +266,7 @@ public class ClassroomMultiExport {
                                         + assignments.size()
                         );
 
+                        // Get students
                         List<StudentRawData> rawStudents =
                                 extractStudents(driver);
 
@@ -213,15 +275,18 @@ public class ClassroomMultiExport {
                                         + rawStudents.size()
                         );
 
+                        // Process students
                         List<StudentData> students =
                                 processStudents(
                                         rawStudents,
                                         assignments
                                 );
 
-                        // Empty classroom (or scrape got
-                        // nothing) - do not write a
-                        // blank tab into the sheet.
+                        /*
+                         * Empty classroom (or scrape got
+                         * nothing) - do not write a
+                         * blank tab into the sheet.
+                         */
                         if (assignments.isEmpty()
                                 && students.isEmpty()) {
 
@@ -233,74 +298,197 @@ public class ClassroomMultiExport {
                             continue;
                         }
 
-                        for(StudentData student:students) {
-                            CourseSummary summary = SummaryService.createSummary(course, student);
-
-
-                            if (spread_sheet_Id.equals(SPREADSHEET_ID_B1)) {
-                                b1summaries.add(summary);
-                            } else if (spread_sheet_Id.equals(SPREADSHEET_ID_B2)) {
-                                b2summaries.add(summary);
-                            }
-                        }
-
-
                         String tabName =
                                 uniqueTabName(
                                         sanitizeTabName(
                                                 normalizeTabPrefix(
-                                                        course.name)),
+                                                        course.name
+                                                )
+                                        ),
                                         usedTabNames
                                 );
 
-                        if (GoogleSheetService.exportToGoogleSheets(
-                                spread_sheet_Id,
-                                tabName,
-                                assignments,
-                                students)) {
+                        /*
+                         * STEP 5
+                         *
+                         * First export the course sheet.
+                         *
+                         * The course sheet calculates:
+                         *
+                         * C = Submissions
+                         * D = Percentage
+                         */
+                        if (GoogleSheetService
+                                .exportToGoogleSheets(
+                                        spread_sheet_Id,
+                                        tabName,
+                                        assignments,
+                                        students
+                                )) {
 
                             exported++;
+
+                            /*
+                             * STEP 6
+                             *
+                             * Read Submissions and Percentage
+                             * from the course sheet.
+                             *
+                             * We are NOT calculating them
+                             * again from student.assignments.
+                             */
+                            List<CourseSummary> summaries =
+                                    GoogleSheetService
+                                            .getSummariesFromSheet(
+                                                    spread_sheet_Id,
+                                                    tabName,
+                                                    course
+                                            );
+
+                            /*
+                             * STEP 7
+                             *
+                             * Add the summaries to the
+                             * correct spreadsheet list.
+                             */
+                            if (spread_sheet_Id.equals(
+                                    SPREADSHEET_ID_B1)) {
+
+                                b1summaries.addAll(
+                                        summaries
+                                );
+
+                                System.out.println(
+                                        "Added "
+                                                + summaries.size()
+                                                + " students to B1 summary."
+                                );
+
+                            } else if (spread_sheet_Id.equals(
+                                    SPREADSHEET_ID_B2)) {
+
+                                b2summaries.addAll(
+                                        summaries
+                                );
+
+                                System.out.println(
+                                        "Added "
+                                                + summaries.size()
+                                                + " students to B2 summary."
+                                );
+                            }
                         }
 
                     } catch (Exception e) {
 
                         System.out.println(
                                 "COURSE FAILED - moving to "
-                                        + "the next one: " + e
+                                        + "the next one: "
+                                        + e
                         );
 
                         e.printStackTrace();
                     }
                 }
-                SummaryService.exportToSummarySheet(SPREADSHEET_ID_B1,"Summary",b1summaries);
-                SummaryService.exportToSummarySheet(SPREADSHEET_ID_B2,"summary",b2summaries);
 
-                System.out.println("\n======================================");
-                System.out.println("EXPORT COMPLETED FOR "
-                        + exported + "/" + courses.size()
-                        + " CLASSROOMS");
-                System.out.println("======================================");
+                /*
+                 * STEP 8
+                 *
+                 * After ALL courses are exported,
+                 * create the final Summary sheets.
+                 */
+                System.out.println(
+                        "\n======================================"
+                );
+
+                System.out.println(
+                        "CREATING B1 SUMMARY"
+                );
+
+                System.out.println(
+                        "B1 students collected: "
+                                + b1summaries.size()
+                );
+
+                System.out.println(
+                        "======================================"
+                );
+
+                SummaryService.exportToSummarySheet(
+                        SPREADSHEET_ID_B1,
+                        "Summary",
+                        b1summaries
+                );
+
+                System.out.println(
+                        "\n======================================"
+                );
+
+                System.out.println(
+                        "CREATING B2 SUMMARY"
+                );
+
+                System.out.println(
+                        "B2 students collected: "
+                                + b2summaries.size()
+                );
+
+                System.out.println(
+                        "======================================"
+                );
+
+                SummaryService.exportToSummarySheet(
+                        SPREADSHEET_ID_B2,
+                        "Summary",
+                        b2summaries
+                );
+
+                System.out.println(
+                        "\n======================================"
+                );
+
+                System.out.println(
+                        "EXPORT COMPLETED FOR "
+                                + exported
+                                + "/"
+                                + courses.size()
+                                + " CLASSROOMS"
+                );
+
+                System.out.println(
+                        "======================================"
+                );
 
             } finally {
 
-                if (BrowserService.isBrowserAlive(driver)) {
+                if (BrowserService.isBrowserAlive(
+                        driver)) {
+
                     driver.quit();
                 }
 
-                System.out.println("\nChrome closed.");
+                System.out.println(
+                        "\nChrome closed."
+                );
             }
 
         } catch (Exception e) {
 
-            System.out.println("\n======================================");
-            System.out.println("APPLICATION ERROR");
-            System.out.println("======================================");
+            System.out.println(
+                    "\n======================================"
+            );
+
+            System.out.println(
+                    "APPLICATION ERROR"
+            );
+
+            System.out.println(
+                    "======================================"
+            );
 
             e.printStackTrace();
         }
     }
-
-
 
     private static String uniqueTabName(
             String baseName,
@@ -311,7 +499,9 @@ public class ClassroomMultiExport {
         int suffix = 2;
 
         while (used.contains(candidate)) {
-            String tail = " (" + suffix++ + ")";
+
+            String tail =
+                    " (" + suffix++ + ")";
 
             int keep =
                     Math.min(
@@ -320,8 +510,10 @@ public class ClassroomMultiExport {
                     );
 
             candidate =
-                    baseName.substring(0, keep)
-                            + tail;
+                    baseName.substring(
+                            0,
+                            keep
+                    ) + tail;
         }
 
         used.add(candidate);
@@ -329,14 +521,11 @@ public class ClassroomMultiExport {
         return candidate;
     }
 
-
-
-    public  static String safeString(
+    public static String safeString(
             Object object) {
 
         return object == null
                 ? ""
                 : String.valueOf(object).trim();
     }
-
 }
