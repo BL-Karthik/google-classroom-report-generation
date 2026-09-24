@@ -1,11 +1,12 @@
 package com.bridgelabz;
 
+import com.bridgelabz.config.ReportConfig;
 import com.bridgelabz.models.*;
 import com.bridgelabz.service.BrowserService;
 import com.bridgelabz.service.CourseService;
 import com.bridgelabz.service.GoogleSheetService;
 import com.bridgelabz.service.SummaryService;
-import org.openqa.selenium.*;
+import org.openqa.selenium.WebDriver;
 
 import java.util.*;
 
@@ -25,19 +26,15 @@ public class ClassroomMultiExport {
      */
 
     private static final String SPREADSHEET_ID_B1 =
-            "1_ptnLvsphtf2WAER_oOBwCMcunKmvbguer0u_GUk_F8";
+            "1fZsJPXt_6V5e7KnHO0MLE_ihbwrXtI3Ae0Md060bD2Q";
 
     private static final String SPREADSHEET_ID_B2 =
-            "1waRl-38hE8NEROWbnTcJItDs8DuKnl6n-t107MWWa5w";
+            "1jgmFkPIFFp71c2EPWMwCXOJ6bG_irJYxFn1rSAoTf_I";
 
     private static final String SERVICE_ACCOUNT_FILE =
             "service_account.json";
 
     // Copy of the main Chrome profile (Profile 55).
-    // Chrome 136+ blocks Selenium debugging on the
-    // real default "User Data" directory, so a
-    // dedicated copy is required. Refresh the copy
-    // if the saved login expires.
     private static final String PROFILE =
             "C:\\Users\\karth\\SeleniumClassroomMain";
 
@@ -47,21 +44,124 @@ public class ClassroomMultiExport {
     private static final String HOME_URL =
             "https://classroom.google.com/u/0/";
 
-    // Google sign-in page that returns straight
-    // to Classroom after the user signs in.
     private static final String SIGNIN_URL =
             "https://accounts.google.com/ServiceLogin"
                     + "?continue=https%3A%2F%2Fclassroom.google.com%2Fu%2F0%2Fh";
 
+
     public static void main(String[] args) {
 
-        System.out.println("\n======================================");
-        System.out.println(" GOOGLE CLASSROOM GRADE EXPORTER");
-        System.out.println("======================================");
+        /*
+         * =====================================================
+         * COMMAND LINE OPTIONS
+         * =====================================================
+         *
+         * Week 6:
+         * mvn exec:java -Dexec.args="6"
+         *
+         * Week 7:
+         * mvn exec:java -Dexec.args="7"
+         *
+         * Week 7 + specific course:
+         * mvn exec:java -Dexec.args="7 BB1P7-702C2"
+         *
+         * Old command:
+         * mvn exec:java -Dexec.args="BB1P7-702C2"
+         *
+         * Old command will default to Week 6.
+         */
+
+        int weekNumber = 6;
+
+        String courseFilter = "";
+
+        /*
+         * Read command-line arguments.
+         */
+        if (args.length > 0) {
+
+            try {
+
+                /*
+                 * First argument is the week number.
+                 */
+                weekNumber =
+                        Integer.parseInt(args[0]);
+
+            } catch (NumberFormatException e) {
+
+                /*
+                 * If first argument is not a number,
+                 * treat it as the course filter.
+                 *
+                 * Example:
+                 *
+                 * -Dexec.args="BB1P7-702C2"
+                 */
+
+                courseFilter = args[0];
+            }
+        }
+
+        /*
+         * Second argument is always treated
+         * as the course filter.
+         *
+         * Example:
+         *
+         * -Dexec.args="7 BB1P7-702C2"
+         */
+        if (args.length > 1) {
+
+            courseFilter = args[1];
+        }
+
+        /*
+         * Set selected week globally.
+         */
+        ReportConfig.setMaxWeek(weekNumber);
+
+        System.out.println(
+                "\n======================================"
+        );
+
+        System.out.println(
+                " GOOGLE CLASSROOM GRADE EXPORTER"
+        );
+
+        System.out.println(
+                "======================================"
+        );
+
+        System.out.println(
+                "Report generated up to Week "
+                        + ReportConfig.getMaxWeek()
+        );
+
+        if (!courseFilter.isEmpty()) {
+
+            System.out.println(
+                    "Course filter: "
+                            + courseFilter
+            );
+        } else {
+
+            System.out.println(
+                    "Course filter: ALL COURSES"
+            );
+        }
+
+        System.out.println(
+                "======================================"
+        );
+
 
         try {
 
+            // =====================================================
             // STEP 1 - Test Google Sheets access
+            // =====================================================
+
             if (!GoogleSheetService.testGoogleSheetsAccess()) {
 
                 System.out.println(
@@ -79,13 +179,20 @@ public class ClassroomMultiExport {
                     "\nGoogle Sheets access confirmed."
             );
 
+
+            // =====================================================
             // STEP 2 - Start Selenium
+            // =====================================================
+
             WebDriver driver =
                     BrowserService.createDriver();
 
             try {
 
+                // =====================================================
                 // STEP 3 - Discover all classrooms
+                // =====================================================
+
                 openClassroomHome(driver);
 
                 List<CourseInfo> courses =
@@ -93,9 +200,7 @@ public class ClassroomMultiExport {
 
                 /*
                  * No classes usually means the profile
-                 * copy is not signed in. Offer manual
-                 * sign-in with email and password, then
-                 * try the home page again.
+                 * copy is not signed in.
                  */
                 if (courses.isEmpty()) {
 
@@ -128,6 +233,7 @@ public class ClassroomMultiExport {
                     }
                 }
 
+
                 System.out.println(
                         "\n======================================"
                 );
@@ -152,27 +258,26 @@ public class ClassroomMultiExport {
                     );
                 }
 
-                // STEP 4 - Export each classroom to
-                // its own tab named after the class
+
+                // =====================================================
+                // STEP 4 - Export each classroom
+                // =====================================================
+
                 Set<String> usedTabNames =
                         new HashSet<>();
 
                 int exported = 0;
 
                 /*
-                 * IMPORTANT:
-                 *
-                 * These lists must be outside the
-                 * course loop.
-                 *
-                 * They collect summary data from
-                 * ALL B1 and B2 course sheets.
+                 * These lists collect summary data
+                 * from ALL B1 and B2 course sheets.
                  */
                 List<CourseSummary> b1summaries =
                         new ArrayList<>();
 
                 List<CourseSummary> b2summaries =
                         new ArrayList<>();
+
 
                 for (int i = 0;
                      i < courses.size();
@@ -181,25 +286,25 @@ public class ClassroomMultiExport {
                     CourseInfo course =
                             courses.get(i);
 
+
                     /*
-                     * Optional filter: pass a course
-                     * name fragment as the first CLI
-                     * argument to re-export only that
-                     * course,
+                     * Optional course filter.
                      *
-                     * mvn exec:java
-                     * -Dexec.args="BB1P7-702C2"
+                     * Example:
+                     *
+                     * 7 BB1P7-702C2
                      */
-                    if (args.length > 0
+                    if (!courseFilter.isEmpty()
                             && !course.name
                             .replace(" ", "")
                             .contains(
-                                    args[0]
+                                    courseFilter
                                             .replace(" ", "")
                             )) {
 
                         continue;
                     }
+
 
                     System.out.println(
                             "\n--------------------------------------"
@@ -218,10 +323,10 @@ public class ClassroomMultiExport {
                             "--------------------------------------"
                     );
 
+
                     /*
-                     * One broken course (timeout, UI
-                     * change, network hiccup) must not
-                     * abort the remaining ones.
+                     * One broken course must not abort
+                     * the remaining courses.
                      */
                     try {
 
@@ -229,6 +334,7 @@ public class ClassroomMultiExport {
                                 routeSpreadsheetId(
                                         course.name
                                 );
+
 
                         if (spread_sheet_Id == null) {
 
@@ -240,11 +346,13 @@ public class ClassroomMultiExport {
                             continue;
                         }
 
+
                         driver.get(
                                 HOME_URL
                                         + "c/"
                                         + course.id
                         );
+
 
                         if (!clickGradesTab(driver)) {
 
@@ -255,9 +363,14 @@ public class ClassroomMultiExport {
                             continue;
                         }
 
+
                         waitForGradebook(driver);
 
+
+                        // =====================================================
                         // Get assignments
+                        // =====================================================
+
                         List<AssignmentColumn> assignments =
                                 getAssignments(driver);
 
@@ -266,7 +379,11 @@ public class ClassroomMultiExport {
                                         + assignments.size()
                         );
 
+
+                        // =====================================================
                         // Get students
+                        // =====================================================
+
                         List<StudentRawData> rawStudents =
                                 extractStudents(driver);
 
@@ -275,17 +392,21 @@ public class ClassroomMultiExport {
                                         + rawStudents.size()
                         );
 
+
+                        // =====================================================
                         // Process students
+                        // =====================================================
+
                         List<StudentData> students =
                                 processStudents(
                                         rawStudents,
                                         assignments
                                 );
 
+
                         /*
-                         * Empty classroom (or scrape got
-                         * nothing) - do not write a
-                         * blank tab into the sheet.
+                         * Empty classroom
+                         * Do not create blank sheet.
                          */
                         if (assignments.isEmpty()
                                 && students.isEmpty()) {
@@ -298,6 +419,11 @@ public class ClassroomMultiExport {
                             continue;
                         }
 
+
+                        // =====================================================
+                        // Create unique tab name
+                        // =====================================================
+
                         String tabName =
                                 uniqueTabName(
                                         sanitizeTabName(
@@ -308,16 +434,11 @@ public class ClassroomMultiExport {
                                         usedTabNames
                                 );
 
-                        /*
-                         * STEP 5
-                         *
-                         * First export the course sheet.
-                         *
-                         * The course sheet calculates:
-                         *
-                         * C = Submissions
-                         * D = Percentage
-                         */
+
+                        // =====================================================
+                        // STEP 5 - Export course sheet
+                        // =====================================================
+
                         if (GoogleSheetService
                                 .exportToGoogleSheets(
                                         spread_sheet_Id,
@@ -328,15 +449,11 @@ public class ClassroomMultiExport {
 
                             exported++;
 
-                            /*
-                             * STEP 6
-                             *
-                             * Read Submissions and Percentage
-                             * from the course sheet.
-                             *
-                             * We are NOT calculating them
-                             * again from student.assignments.
-                             */
+
+                            // =====================================================
+                            // STEP 6 - Read summary from course sheet
+                            // =====================================================
+
                             List<CourseSummary> summaries =
                                     GoogleSheetService
                                             .getSummariesFromSheet(
@@ -345,12 +462,11 @@ public class ClassroomMultiExport {
                                                     course
                                             );
 
-                            /*
-                             * STEP 7
-                             *
-                             * Add the summaries to the
-                             * correct spreadsheet list.
-                             */
+
+                            // =====================================================
+                            // STEP 7 - Add to B1/B2 summary
+                            // =====================================================
+
                             if (spread_sheet_Id.equals(
                                     SPREADSHEET_ID_B1)) {
 
@@ -363,6 +479,7 @@ public class ClassroomMultiExport {
                                                 + summaries.size()
                                                 + " students to B1 summary."
                                 );
+
 
                             } else if (spread_sheet_Id.equals(
                                     SPREADSHEET_ID_B2)) {
@@ -379,6 +496,7 @@ public class ClassroomMultiExport {
                             }
                         }
 
+
                     } catch (Exception e) {
 
                         System.out.println(
@@ -391,12 +509,11 @@ public class ClassroomMultiExport {
                     }
                 }
 
-                /*
-                 * STEP 8
-                 *
-                 * After ALL courses are exported,
-                 * create the final Summary sheets.
-                 */
+
+                // =====================================================
+                // STEP 8 - Create B1 Summary
+                // =====================================================
+
                 System.out.println(
                         "\n======================================"
                 );
@@ -414,11 +531,17 @@ public class ClassroomMultiExport {
                         "======================================"
                 );
 
+
                 SummaryService.exportToSummarySheet(
                         SPREADSHEET_ID_B1,
                         "Summary",
                         b1summaries
                 );
+
+
+                // =====================================================
+                // STEP 9 - Create B2 Summary
+                // =====================================================
 
                 System.out.println(
                         "\n======================================"
@@ -437,11 +560,17 @@ public class ClassroomMultiExport {
                         "======================================"
                 );
 
+
                 SummaryService.exportToSummarySheet(
                         SPREADSHEET_ID_B2,
                         "Summary",
                         b2summaries
                 );
+
+
+                // =====================================================
+                // FINAL RESULT
+                // =====================================================
 
                 System.out.println(
                         "\n======================================"
@@ -456,8 +585,14 @@ public class ClassroomMultiExport {
                 );
 
                 System.out.println(
+                        "REPORT GENERATED UP TO WEEK "
+                                + ReportConfig.getMaxWeek()
+                );
+
+                System.out.println(
                         "======================================"
                 );
+
 
             } finally {
 
@@ -471,6 +606,7 @@ public class ClassroomMultiExport {
                         "\nChrome closed."
                 );
             }
+
 
         } catch (Exception e) {
 
@@ -489,6 +625,11 @@ public class ClassroomMultiExport {
             e.printStackTrace();
         }
     }
+
+
+    // =====================================================
+    // Generate unique Google Sheet tab name
+    // =====================================================
 
     private static String uniqueTabName(
             String baseName,
@@ -520,6 +661,11 @@ public class ClassroomMultiExport {
 
         return candidate;
     }
+
+
+    // =====================================================
+    // Safe String
+    // =====================================================
 
     public static String safeString(
             Object object) {
