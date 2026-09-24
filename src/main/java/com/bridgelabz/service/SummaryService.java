@@ -41,7 +41,7 @@ public class SummaryService {
                 student.assignments;
 
         /*
-         * Count ONLY Week 1 to Week 6.
+         * Count ONLY Week 1 to config week #
          *
          * Week 7, Week 8, projects, feedback,
          * quizzes, etc. are ignored.
@@ -52,7 +52,7 @@ public class SummaryService {
         for (AssignmentResult assignment :
                 list) {
 
-            if (!isWeek1To6(assignment.title)) {
+            if (!GoogleSheetService.isValidWeekAssignment(assignment.title)) {
                 continue;
             }
 
@@ -80,41 +80,6 @@ public class SummaryService {
         );
     }
 
-
-    private static boolean isWeek1To6(
-            String title) {
-
-        if (title == null ||
-                title.trim().isEmpty()) {
-
-            return false;
-        }
-
-        String text =
-                title.trim().toLowerCase();
-
-        /*
-         * Accepts:
-         *
-         * Week 1
-         * Week 1 - Java
-         * Week 2 Assignment
-         * Week 3 - OOPS
-         *
-         * Rejects:
-         *
-         * Week 7
-         * Week 8
-         * Project
-         * NPS Feedback
-         */
-        return text.matches(
-                ".*\\bweek\\s*[1-6]\\b.*"
-
-        );
-    }
-
-
     public static boolean exportToSummarySheet(
             String spreadsheetId,
             String tabName,
@@ -133,7 +98,7 @@ public class SummaryService {
                             spreadsheetId,
                             sheetName
                     );
-            GoogleSheetService.ensureSheetSize(
+            GoogleSheetFormatService.ensureSheetSize(
                     sheets,
                     spreadsheetId,
                     sheetId,
@@ -207,7 +172,7 @@ public class SummaryService {
                     )
                     .execute();
 
-            GoogleSheetService.summaryFormatSheet(
+            GoogleSheetFormatService.summaryFormatSheet(
                     sheets,
                     spreadsheetId,
                     sheetId,
