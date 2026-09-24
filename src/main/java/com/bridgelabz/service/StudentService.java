@@ -363,7 +363,7 @@ public class StudentService {
         return students;
     }
 
-    public  static StudentData processStudent(
+    public static StudentData processStudent(
             StudentRawData raw,
             List<AssignmentColumn> assignmentColumns) {
 
@@ -372,15 +372,29 @@ public class StudentService {
 
         student.name = raw.name;
         student.email = raw.email;
-        String [] seperation =student.name.split(" \\(");
-        student.name=seperation[0].trim();
-        student.rollNumber=seperation[1].replace(")"," ").trim();
+
+        String[] separation =
+                student.name.split(" \\(");
+
+        student.name =
+                separation[0].trim();
+
+        if (separation.length > 1) {
+            student.rollNumber =
+                    separation[1]
+                            .replace(")", "")
+                            .trim();
+        }
 
         for (AssignmentColumn column :
                 assignmentColumns) {
 
             AssignmentResult result =
                     new AssignmentResult();
+
+            // IMPORTANT:
+            // Store the actual Classroom assignment title.
+            result.title = column.title;
 
             ClassroomCellData cell =
                     column.cellIndex < raw.cells.size()
@@ -392,10 +406,6 @@ public class StudentService {
                 String combined =
                         SubmissionService.buildCombinedText(cell);
 
-                // A cell still showing its loading
-                // placeholder must NOT be exported
-                // as a real "Assigned" status - mark
-                // it so bad data is visible.
                 String lower =
                         combined.toLowerCase();
 
@@ -405,27 +415,25 @@ public class StudentService {
                         "loading more")) {
 
                     result.grade = "";
-
                     result.status = "NotLoaded";
 
                 } else {
 
                     result.grade =
-                           SubmissionService.extractGrade(
+                            SubmissionService.extractGrade(
                                     combined,
                                     cell.text
                             );
 
                     result.status =
-                            SubmissionService.extractStatus(combined);
+                            SubmissionService.extractStatus(
+                                    combined
+                            );
                 }
 
             } else {
 
-                // Blank gradebook cell = work
-                // assigned, nothing submitted.
-                result.status =
-                        "Assigned";
+                result.status = "Assigned";
             }
 
             student.assignments.add(result);
