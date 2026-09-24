@@ -16,9 +16,9 @@ import java.util.List;
 
 public class GoogleSheetService {
 
-
     private static final String SPREADSHEET_ID_B1 =
             "1_ptnLvsphtf2WAER_oOBwCMcunKmvbguer0u_GUk_F8";
+
     private static final String SPREADSHEET_ID_B2 =
             "1waRl-38hE8NEROWbnTcJItDs8DuKnl6n-t107MWWa5w";
 
@@ -26,10 +26,10 @@ public class GoogleSheetService {
             "service_account.json";
 
     // ============================================================
-    // GOOGLE SHEETS
+    // GOOGLE SHEETS SERVICE
     // ============================================================
 
-    public  static Sheets createSheetsService() throws Exception {
+    public static Sheets createSheetsService() throws Exception {
 
         try (FileInputStream input =
                      new FileInputStream(SERVICE_ACCOUNT_FILE)) {
@@ -58,7 +58,11 @@ public class GoogleSheetService {
         }
     }
 
-    public  static boolean testGoogleSheetsAccess() {
+    // ============================================================
+    // TEST GOOGLE SHEETS ACCESS
+    // ============================================================
+
+    public static boolean testGoogleSheetsAccess() {
 
         System.out.println("\n======================================");
         System.out.println("GOOGLE SHEETS ACCESS TEST");
@@ -78,7 +82,8 @@ public class GoogleSheetService {
             for (String target : targets) {
 
                 String id = target.substring(
-                        target.indexOf(':') + 2);
+                        target.indexOf(':') + 2
+                );
 
                 System.out.println(
                         "\nChecking spreadsheet: "
@@ -89,12 +94,10 @@ public class GoogleSheetService {
 
                     System.out.println(
                             "NOT CONFIGURED - paste the "
-                                    + "spreadsheet ID into "
-                                    + "ClassroomMultiExport.java"
+                                    + "spreadsheet ID."
                     );
 
                     allOk = false;
-
                     continue;
                 }
 
@@ -113,7 +116,8 @@ public class GoogleSheetService {
 
             return allOk;
 
-        } catch (com.google.api.client.googleapis.json.GoogleJsonResponseException e) {
+        } catch (
+                com.google.api.client.googleapis.json.GoogleJsonResponseException e) {
 
             System.out.println(
                     "\nGOOGLE SHEETS ERROR"
@@ -180,6 +184,73 @@ public class GoogleSheetService {
         }
     }
 
+    // ============================================================
+    // CHECK WHETHER ASSIGNMENT IS WEEK 1 - WEEK 6
+    // ============================================================
+
+    private static boolean isWeek1To6(String title) {
+
+        if (title == null || title.trim().isEmpty()) {
+            return false;
+        }
+
+        /*
+         * Accepts:
+         *
+         * Week 1
+         * Week 2 - Java
+         * Java - Week 3
+         * Assignment - Week 4
+         * JFS Week 5
+         * Week 6 Assignment
+         *
+         * Rejects:
+         *
+         * Week 7
+         * Week 8
+         * Week 10
+         * Project
+         * NPS Feedback
+         */
+
+        return title.matches(
+                "(?i).*\\bweek\\s*[1-6]\\b.*"
+        );
+    }
+
+    // ============================================================
+    // GET ONLY WEEK 1 - WEEK 6 ASSIGNMENTS
+    // ============================================================
+
+    private static List<AssignmentColumn> getWeek1To6Assignments(
+            List<AssignmentColumn> assignments) {
+
+        List<AssignmentColumn> validAssignments =
+                new ArrayList<>();
+
+        if (assignments == null) {
+            return validAssignments;
+        }
+
+        for (AssignmentColumn assignment : assignments) {
+
+            if (assignment == null) {
+                continue;
+            }
+
+            if (isWeek1To6(assignment.title)) {
+
+                validAssignments.add(assignment);
+            }
+        }
+
+        return validAssignments;
+    }
+
+    // ============================================================
+    // EXPORT INDIVIDUAL COURSE SHEET
+    // ============================================================
+
     public static boolean exportToGoogleSheets(
             String spreadsheetId,
             String tabName,
@@ -205,97 +276,163 @@ public class GoogleSheetService {
                     sheetName
             );
 
+            // ====================================================
+            // IMPORTANT:
+            // ONLY WEEK 1 - WEEK 6
+            // ====================================================
+
+            List<AssignmentColumn> validAssignments =
+                    getWeek1To6Assignments(assignments);
+
+            int statusCount =
+                    validAssignments.size();
+
+            System.out.println(
+                    "\nAssignments selected for "
+                            + sheetName
+                            + ": "
+                            + statusCount
+            );
+
+            for (AssignmentColumn assignment :
+                    validAssignments) {
+
+                System.out.println(
+                        "  - "
+                                + assignment.title
+                );
+            }
+
+            // ====================================================
+            // CREATE HEADER
+            // ====================================================
+
             List<List<Object>> values =
                     new ArrayList<>();
 
-            // Every coursework exports as a single
-            // Status column (grades are tracked in
-            // the Classroom itself), followed by two
-            // summary columns.
-            int statusCount = Math.min(assignments.size() - 2, 12);
-
             List<Object> header =
                     new ArrayList<>();
-            header.add("# Roll Number ");
+
+            header.add("# Roll Number");
             header.add("Student Name");
             header.add("Submissions");
             header.add("Percentage");
 
+            /*
+             * Status columns:
+             *
+             * Week 1
+             * Week 2
+             * Week 3
+             * ...
+             * Week 6
+             *
+             * Only the assignments actually present
+             * in Classroom are included.
+             */
 
-            for (int i = assignments.size()-1;
-                 i >=assignments.size()-statusCount;
-                 i--) {
+            for (AssignmentColumn assignment :
+                    validAssignments) {
 
                 header.add(
-                        assignments.get(i).title
+                        assignment.title
                                 + " - Status"
                 );
             }
 
-
-
             values.add(header);
 
-            // 0-based indexes of the first status
-            // column (B), the Submissions column and
-            // the Percentage column in each row.
+            // ====================================================
+            // COLUMN LETTERS
+            // ====================================================
+
+            /*
+             * A = Roll Number
+             * B = Student Name
+             * C = Submissions
+             * D = Percentage
+             * E onwards = Status
+             */
+
             String firstStatusCol =
-                    GoogleSheetService.columnLetter(4);
+                    columnLetter(4);
 
             String lastStatusCol =
-                    GoogleSheetService.columnLetter(4+statusCount-1);
+                    columnLetter(
+                            4 + statusCount - 1
+                    );
 
             String submissionsCol =
-                    GoogleSheetService.columnLetter(2);
+                    columnLetter(2);
 
+            // ====================================================
             // STUDENTS
+            // ====================================================
+
             for (StudentData student : students) {
 
                 List<Object> row =
                         new ArrayList<>();
+
                 row.add(student.rollNumber);
                 row.add(student.name);
+
                 int rowNum =
                         values.size() + 1;
+
+                // =================================================
+                // SUBMISSIONS + PERCENTAGE
+                // =================================================
 
                 if (statusCount > 0) {
 
                     row.add(
                             "=COUNTIF("
                                     + firstStatusCol
-                                    + rowNum + ":"
+                                    + rowNum
+                                    + ":"
                                     + lastStatusCol
                                     + rowNum
                                     + ",\"Submitted\")"
                     );
 
                     row.add(
-                            "=" + submissionsCol
+                            "="
+                                    + submissionsCol
                                     + rowNum
-                                    + "/" + statusCount
+                                    + "/"
+                                    + statusCount
                     );
 
                 } else {
 
                     row.add(0);
-
                     row.add("");
                 }
 
-                for (int i = student.assignments.size()-1;
-                     i >=assignments.size()-statusCount;
-                     i--) {
+                // =================================================
+                // STATUS VALUES
+                // =================================================
 
-                    row.add(
-                            student.assignments
-                                    .get(i)
-                                    .status
-                    );
+                for (AssignmentColumn assignment :
+                        validAssignments) {
+
+                    String status =
+                            getStudentAssignmentStatus(
+                                    student,
+                                    assignment,
+                                    assignments
+                            );
+
+                    row.add(status);
                 }
 
                 values.add(row);
             }
 
+            // ====================================================
+            // WRITE TO GOOGLE SHEETS
+            // ====================================================
 
             ValueRange body =
                     new ValueRange()
@@ -312,6 +449,10 @@ public class GoogleSheetService {
                             "USER_ENTERED"
                     )
                     .execute();
+
+            // ====================================================
+            // FORMAT SHEET
+            // ====================================================
 
             GoogleSheetService.formatSheet(
                     sheets,
@@ -361,34 +502,97 @@ public class GoogleSheetService {
         }
     }
 
-    /*
-     * Converts a 0-based column index into its
-     * spreadsheet letter, e.g. 0 -> "A",
-     * 27 -> "AB" (used to build the summary
-     * column formulas).
-     */
-    public  static String columnLetter(
+    // ============================================================
+    // GET STUDENT STATUS FOR ASSIGNMENT
+    // ============================================================
+
+    private static String getStudentAssignmentStatus(
+            StudentData student,
+            AssignmentColumn assignment,
+            List<AssignmentColumn> assignments) {
+
+        if (student.assignments == null ||
+                student.assignments.isEmpty()) {
+
+            return "Not submitted";
+        }
+
+        int originalIndex =
+                assignments.indexOf(assignment);
+
+        if (originalIndex >= 0 &&
+                originalIndex < student.assignments.size()) {
+
+            String status =
+                    student.assignments
+                            .get(originalIndex)
+                            .status;
+
+            return status == null
+                    ? "Not submitted"
+                    : status;
+        }
+
+        return "Not submitted";
+    }
+
+    // ============================================================
+    // FIND ASSIGNMENT INDEX
+    // ============================================================
+
+    private static int findAssignmentIndex(
+            AssignmentColumn assignment) {
+
+        /*
+         * AssignmentColumn.cellIndex represents
+         * the original Classroom column position.
+         *
+         * We cannot directly use cellIndex here as
+         * StudentData.assignments may contain only
+         * processed assignments.
+         *
+         * The title-based fallback above handles
+         * the safer matching case.
+         */
+
+        return -1;
+    }
+
+    // ============================================================
+    // COLUMN LETTER
+    // ============================================================
+
+    public static String columnLetter(
             int zeroBasedIndex) {
 
         StringBuilder letter =
                 new StringBuilder();
 
-        int index = zeroBasedIndex;
+        int index =
+                zeroBasedIndex;
 
         while (index >= 0) {
 
             letter.insert(
                     0,
-                    (char) ('A' + index % 26)
+                    (char) (
+                            'A'
+                                    + index % 26
+                    )
             );
 
-            index = index / 26 - 1;
+            index =
+                    index / 26 - 1;
         }
 
         return letter.toString();
     }
 
-    public  static int getOrCreateSheet(
+    // ============================================================
+    // GET OR CREATE SHEET
+    // ============================================================
+
+    public static int getOrCreateSheet(
             Sheets sheets,
             String spreadsheetId,
             String sheetName) throws Exception {
@@ -447,7 +651,95 @@ public class GoogleSheetService {
                 .getSheetId();
     }
 
-    public  static void clearSheet(
+    // ============================================================
+    // CLEAR SHEET
+    // ============================================================
+
+    // ============================================================
+// GET EXISTING SHEET ID
+// ============================================================
+
+    public static int getOrCreateSummarySheet(
+            Sheets sheets,
+            String spreadsheetId,
+            String sheetName) throws Exception {
+
+        Spreadsheet spreadsheet =
+                sheets.spreadsheets()
+                        .get(spreadsheetId)
+                        .execute();
+
+        if (spreadsheet.getSheets() != null) {
+
+            for (Sheet sheet :
+                    spreadsheet.getSheets()) {
+
+                SheetProperties properties =
+                        sheet.getProperties();
+
+                if (properties == null) {
+                    continue;
+                }
+
+                String existingName =
+                        properties.getTitle();
+
+                if (existingName != null &&
+                        existingName.trim()
+                                .equalsIgnoreCase(
+                                        sheetName.trim())) {
+
+                    System.out.println(
+                            "Summary sheet found: "
+                                    + existingName
+                    );
+
+                    return properties.getSheetId();
+                }
+            }
+        }
+
+        // Summary sheet does not exist.
+        // Create it.
+        System.out.println(
+                "Summary sheet not found. Creating: "
+                        + sheetName
+        );
+
+        AddSheetRequest addSheetRequest =
+                new AddSheetRequest()
+                        .setProperties(
+                                new SheetProperties()
+                                        .setTitle(sheetName)
+                        );
+
+        BatchUpdateSpreadsheetRequest request =
+                new BatchUpdateSpreadsheetRequest()
+                        .setRequests(
+                                Collections.singletonList(
+                                        new Request()
+                                                .setAddSheet(
+                                                        addSheetRequest
+                                                )
+                                )
+                        );
+
+        BatchUpdateSpreadsheetResponse response =
+                sheets.spreadsheets()
+                        .batchUpdate(
+                                spreadsheetId,
+                                request
+                        )
+                        .execute();
+
+        return response
+                .getReplies()
+                .get(0)
+                .getAddSheet()
+                .getProperties()
+                .getSheetId();
+    }
+    public static void clearSheet(
             Sheets sheets,
             String spreadsheetId,
             String sheetName) throws Exception {
@@ -462,7 +754,175 @@ public class GoogleSheetService {
                 .execute();
     }
 
-    public  static void formatSheet(
+    // ============================================================
+    // FORMAT INDIVIDUAL SHEET
+    // ============================================================
+
+    public static void formatSheet(
+            Sheets sheets,
+            String spreadsheetId,
+            int sheetId,
+            int rows,
+            int columns) throws Exception {
+
+        List<Request> requests =
+                new ArrayList<>();
+
+        // ========================================================
+        // BOLD HEADER
+        // ========================================================
+
+        requests.add(
+                new Request()
+                        .setRepeatCell(
+                                new RepeatCellRequest()
+                                        .setRange(
+                                                new GridRange()
+                                                        .setSheetId(
+                                                                sheetId
+                                                        )
+                                                        .setStartRowIndex(
+                                                                0
+                                                        )
+                                                        .setEndRowIndex(
+                                                                1
+                                                        )
+                                                        .setStartColumnIndex(
+                                                                0
+                                                        )
+                                                        .setEndColumnIndex(
+                                                                columns
+                                                        )
+                                        )
+                                        .setCell(
+                                                new CellData()
+                                                        .setUserEnteredFormat(
+                                                                new CellFormat()
+                                                                        .setTextFormat(
+                                                                                new TextFormat()
+                                                                                        .setBold(true)
+                                                                        )
+                                                        )
+                                        )
+                                        .setFields(
+                                                "userEnteredFormat.textFormat.bold"
+                                        )
+                        )
+        );
+
+        // ========================================================
+        // FREEZE FIRST ROW
+        // ========================================================
+
+        requests.add(
+                new Request()
+                        .setUpdateSheetProperties(
+                                new UpdateSheetPropertiesRequest()
+                                        .setProperties(
+                                                new SheetProperties()
+                                                        .setSheetId(
+                                                                sheetId
+                                                        )
+                                                        .setGridProperties(
+                                                                new GridProperties()
+                                                                        .setFrozenRowCount(
+                                                                                1
+                                                                        )
+                                                        )
+                                        )
+                                        .setFields(
+                                                "gridProperties.frozenRowCount"
+                                        )
+                        )
+        );
+
+        // ========================================================
+        // AUTO RESIZE
+        // ========================================================
+
+        requests.add(
+                new Request()
+                        .setAutoResizeDimensions(
+                                new AutoResizeDimensionsRequest()
+                                        .setDimensions(
+                                                new DimensionRange()
+                                                        .setSheetId(
+                                                                sheetId
+                                                        )
+                                                        .setDimension(
+                                                                "COLUMNS"
+                                                        )
+                                                        .setStartIndex(
+                                                                0
+                                                        )
+                                                        .setEndIndex(
+                                                                columns
+                                                        )
+                                        )
+                        )
+        );
+
+        // ========================================================
+        // PERCENTAGE FORMAT
+        // ========================================================
+
+        requests.add(
+                new Request()
+                        .setRepeatCell(
+                                new RepeatCellRequest()
+                                        .setRange(
+                                                new GridRange()
+                                                        .setSheetId(
+                                                                sheetId
+                                                        )
+                                                        .setStartRowIndex(
+                                                                1
+                                                        )
+                                                        .setEndRowIndex(
+                                                                rows
+                                                        )
+                                                        .setStartColumnIndex(
+                                                                3
+                                                        )
+                                                        .setEndColumnIndex(
+                                                                4
+                                                        )
+                                        )
+                                        .setCell(
+                                                new CellData()
+                                                        .setUserEnteredFormat(
+                                                                new CellFormat()
+                                                                        .setNumberFormat(
+                                                                                new NumberFormat()
+                                                                                        .setType(
+                                                                                                "PERCENT"
+                                                                                        )
+                                                                                        .setPattern(
+                                                                                                "0%"
+                                                                                        )
+                                                                        )
+                                                        )
+                                        )
+                                        .setFields(
+                                                "userEnteredFormat.numberFormat"
+                                        )
+                        )
+        );
+
+        sheets.spreadsheets()
+                .batchUpdate(
+                        spreadsheetId,
+                        new BatchUpdateSpreadsheetRequest()
+                                .setRequests(requests)
+                )
+                .execute();
+    }
+
+    // ============================================================
+    // SUMMARY SHEET FORMAT
+    // ============================================================
+
+    public static void summaryFormatSheet(
             Sheets sheets,
             String spreadsheetId,
             int sheetId,
@@ -479,14 +939,24 @@ public class GoogleSheetService {
                                 new RepeatCellRequest()
                                         .setRange(
                                                 new GridRange()
-                                                        .setSheetId(sheetId)
-                                                        .setStartRowIndex(0)
-                                                        .setEndRowIndex(1)
-                                                        .setStartColumnIndex(0)
-                                                        .setEndColumnIndex(columns)
+                                                        .setSheetId(
+                                                                sheetId
+                                                        )
+                                                        .setStartRowIndex(
+                                                                0
+                                                        )
+                                                        .setEndRowIndex(
+                                                                1
+                                                        )
+                                                        .setStartColumnIndex(
+                                                                0
+                                                        )
+                                                        .setEndColumnIndex(
+                                                                columns
+                                                        )
                                         )
                                         .setCell(
-                                                new com.google.api.services.sheets.v4.model.CellData()
+                                                new CellData()
                                                         .setUserEnteredFormat(
                                                                 new CellFormat()
                                                                         .setTextFormat(
@@ -508,10 +978,14 @@ public class GoogleSheetService {
                                 new UpdateSheetPropertiesRequest()
                                         .setProperties(
                                                 new SheetProperties()
-                                                        .setSheetId(sheetId)
+                                                        .setSheetId(
+                                                                sheetId
+                                                        )
                                                         .setGridProperties(
                                                                 new GridProperties()
-                                                                        .setFrozenRowCount(1)
+                                                                        .setFrozenRowCount(
+                                                                                1
+                                                                        )
                                                         )
                                         )
                                         .setFields(
@@ -527,37 +1001,101 @@ public class GoogleSheetService {
                                 new AutoResizeDimensionsRequest()
                                         .setDimensions(
                                                 new DimensionRange()
-                                                        .setSheetId(sheetId)
-                                                        .setDimension("COLUMNS")
-                                                        .setStartIndex(0)
-                                                        .setEndIndex(columns)
+                                                        .setSheetId(
+                                                                sheetId
+                                                        )
+                                                        .setDimension(
+                                                                "COLUMNS"
+                                                        )
+                                                        .setStartIndex(
+                                                                0
+                                                        )
+                                                        .setEndIndex(
+                                                                columns
+                                                        )
                                         )
                         )
         );
 
-        // Percent format on the Percentage
-        // column (last header column) so the
-        // formula shows e.g. "70%" not "0.7".
+        // Percentage
         requests.add(
                 new Request()
                         .setRepeatCell(
                                 new RepeatCellRequest()
                                         .setRange(
                                                 new GridRange()
-                                                        .setSheetId(sheetId)
-                                                        .setStartRowIndex(1)
-                                                        .setEndRowIndex(rows)
-                                                        .setStartColumnIndex(3)
-                                                        .setEndColumnIndex(4)
+                                                        .setSheetId(
+                                                                sheetId
+                                                        )
+                                                        .setStartRowIndex(
+                                                                1
+                                                        )
+                                                        .setEndRowIndex(
+                                                                rows
+                                                        )
+                                                        .setStartColumnIndex(
+                                                                4
+                                                        )
+                                                        .setEndColumnIndex(
+                                                                5
+                                                        )
                                         )
                                         .setCell(
-                                                new com.google.api.services.sheets.v4.model.CellData()
+                                                new CellData()
                                                         .setUserEnteredFormat(
                                                                 new CellFormat()
                                                                         .setNumberFormat(
                                                                                 new NumberFormat()
-                                                                                        .setType("PERCENT")
-                                                                                        .setPattern("0%")
+                                                                                        .setType(
+                                                                                                "PERCENT"
+                                                                                        )
+                                                                                        .setPattern(
+                                                                                                "0%"
+                                                                                        )
+                                                                        )
+                                                        )
+                                        )
+                                        .setFields(
+                                                "userEnteredFormat.numberFormat"
+                                        )
+                        )
+        );
+
+        // Submissions number format
+        requests.add(
+                new Request()
+                        .setRepeatCell(
+                                new RepeatCellRequest()
+                                        .setRange(
+                                                new GridRange()
+                                                        .setSheetId(
+                                                                sheetId
+                                                        )
+                                                        .setStartRowIndex(
+                                                                1
+                                                        )
+                                                        .setEndRowIndex(
+                                                                rows
+                                                        )
+                                                        .setStartColumnIndex(
+                                                                3
+                                                        )
+                                                        .setEndColumnIndex(
+                                                                4
+                                                        )
+                                        )
+                                        .setCell(
+                                                new CellData()
+                                                        .setUserEnteredFormat(
+                                                                new CellFormat()
+                                                                        .setNumberFormat(
+                                                                                new NumberFormat()
+                                                                                        .setType(
+                                                                                                "NUMBER"
+                                                                                        )
+                                                                                        .setPattern(
+                                                                                                "0"
+                                                                                        )
                                                                         )
                                                         )
                                         )
@@ -576,155 +1114,17 @@ public class GoogleSheetService {
                 .execute();
     }
 
-    public  static void summaryFormatSheet(
-            Sheets sheets,
-            String spreadsheetId,
-            int sheetId,
-            int rows,
-            int columns) throws Exception {
+    // ============================================================
+    // READ SUMMARY FROM SHEET
+    // ============================================================
 
-        List<Request> requests =
-                new ArrayList<>();
-
-        // Bold header
-        requests.add(
-                new Request()
-                        .setRepeatCell(
-                                new RepeatCellRequest()
-                                        .setRange(
-                                                new GridRange()
-                                                        .setSheetId(sheetId)
-                                                        .setStartRowIndex(0)
-                                                        .setEndRowIndex(1)
-                                                        .setStartColumnIndex(0)
-                                                        .setEndColumnIndex(columns)
-                                        )
-                                        .setCell(
-                                                new com.google.api.services.sheets.v4.model.CellData()
-                                                        .setUserEnteredFormat(
-                                                                new CellFormat()
-                                                                        .setTextFormat(
-                                                                                new TextFormat()
-                                                                                        .setBold(true)
-                                                                        )
-                                                        )
-                                        )
-                                        .setFields(
-                                                "userEnteredFormat.textFormat.bold"
-                                        )
-                        )
-        );
-
-        // Freeze first row
-        requests.add(
-                new Request()
-                        .setUpdateSheetProperties(
-                                new UpdateSheetPropertiesRequest()
-                                        .setProperties(
-                                                new SheetProperties()
-                                                        .setSheetId(sheetId)
-                                                        .setGridProperties(
-                                                                new GridProperties()
-                                                                        .setFrozenRowCount(1)
-                                                        )
-                                        )
-                                        .setFields(
-                                                "gridProperties.frozenRowCount"
-                                        )
-                        )
-        );
-
-        // Auto resize
-        requests.add(
-                new Request()
-                        .setAutoResizeDimensions(
-                                new AutoResizeDimensionsRequest()
-                                        .setDimensions(
-                                                new DimensionRange()
-                                                        .setSheetId(sheetId)
-                                                        .setDimension("COLUMNS")
-                                                        .setStartIndex(0)
-                                                        .setEndIndex(columns)
-                                        )
-                        )
-        );
-
-        // Percent format on the Percentage
-        // column (last header column) so the
-        // formula shows e.g. "70%" not "0.7".
-        requests.add(
-                new Request()
-                        .setRepeatCell(
-                                new RepeatCellRequest()
-                                        .setRange(
-                                                new GridRange()
-                                                        .setSheetId(sheetId)
-                                                        .setStartRowIndex(1)
-                                                        .setEndRowIndex(rows)
-                                                        .setStartColumnIndex(4)
-                                                        .setEndColumnIndex(5)
-                                        )
-                                        .setCell(
-                                                new com.google.api.services.sheets.v4.model.CellData()
-                                                        .setUserEnteredFormat(
-                                                                new CellFormat()
-                                                                        .setNumberFormat(
-                                                                                new NumberFormat()
-                                                                                        .setType("PERCENT")
-                                                                                        .setPattern("0%")
-                                                                        )
-                                                        )
-                                        )
-                                        .setFields(
-                                                "userEnteredFormat.numberFormat"
-                                        )
-                        )
-        );
-
-        requests.add(
-                new Request()
-                        .setRepeatCell(
-                                new RepeatCellRequest()
-                                        .setRange(
-                                                new GridRange()
-                                                        .setSheetId(sheetId)
-                                                        .setStartRowIndex(1)
-                                                        .setEndRowIndex(rows)
-                                                        .setStartColumnIndex(3)
-                                                        .setEndColumnIndex(4)
-                                        )
-                                        .setCell(
-                                                new com.google.api.services.sheets.v4.model.CellData()
-                                                        .setUserEnteredFormat(
-                                                                new CellFormat()
-                                                                        .setNumberFormat(
-                                                                                new NumberFormat()
-                                                                                        .setType("NUMBER")
-
-                                                                                        .setPattern("0")
-                                                                        )
-                                                        )
-                                        )
-                                        .setFields(
-                                                "userEnteredFormat.numberFormat"
-                                        )
-                        )
-        );
-
-        sheets.spreadsheets()
-                .batchUpdate(
-                        spreadsheetId,
-                        new BatchUpdateSpreadsheetRequest()
-                                .setRequests(requests)
-                )
-                .execute();
-    }
     public static List<CourseSummary> getSummariesFromSheet(
             String spreadsheetId,
             String tabName,
             CourseInfo course) throws Exception {
 
-        Sheets sheets = createSheetsService();
+        Sheets sheets =
+                createSheetsService();
 
         ValueRange response =
                 sheets.spreadsheets()
@@ -733,10 +1133,13 @@ public class GoogleSheetService {
                                 spreadsheetId,
                                 tabName + "!A2:D"
                         )
-                        .setValueRenderOption("UNFORMATTED_VALUE")
+                        .setValueRenderOption(
+                                "UNFORMATTED_VALUE"
+                        )
                         .execute();
 
-        List<List<Object>> rows = response.getValues();
+        List<List<Object>> rows =
+                response.getValues();
 
         List<CourseSummary> summaries =
                 new ArrayList<>();
@@ -752,6 +1155,7 @@ public class GoogleSheetService {
                 courseNameArray[0].trim();
 
         if (!courseName.isEmpty()) {
+
             courseName =
                     courseName.substring(1);
         }
@@ -763,19 +1167,27 @@ public class GoogleSheetService {
             }
 
             String rollNumber =
-                    String.valueOf(row.get(0));
+                    String.valueOf(
+                            row.get(0)
+                    );
 
             String studentName =
-                    String.valueOf(row.get(1));
+                    String.valueOf(
+                            row.get(1)
+                    );
 
             int submissions =
                     Integer.parseInt(
-                            String.valueOf(row.get(2))
+                            String.valueOf(
+                                    row.get(2)
+                            )
                     );
 
             double percentage =
                     Double.parseDouble(
-                            String.valueOf(row.get(3))
+                            String.valueOf(
+                                    row.get(3)
+                            )
                     );
 
             CourseSummary summary =
@@ -799,5 +1211,111 @@ public class GoogleSheetService {
         );
 
         return summaries;
+    }
+
+    // ============================================================
+// ENSURE SHEET HAS ENOUGH ROWS AND COLUMNS
+// ============================================================
+
+    public static void ensureSheetSize(
+            Sheets sheets,
+            String spreadsheetId,
+            int sheetId,
+            int requiredRows,
+            int requiredColumns) throws Exception {
+
+        Spreadsheet spreadsheet =
+                sheets.spreadsheets()
+                        .get(spreadsheetId)
+                        .execute();
+
+        for (Sheet sheet : spreadsheet.getSheets()) {
+
+            SheetProperties properties =
+                    sheet.getProperties();
+
+            if (properties.getSheetId() != sheetId) {
+                continue;
+            }
+
+            GridProperties gridProperties =
+                    properties.getGridProperties();
+
+            int currentRows =
+                    gridProperties.getRowCount();
+
+            int currentColumns =
+                    gridProperties.getColumnCount();
+
+            boolean needsUpdate =
+                    currentRows < requiredRows
+                            || currentColumns < requiredColumns;
+
+            if (!needsUpdate) {
+                return;
+            }
+
+            GridProperties newGridProperties =
+                    new GridProperties()
+                            .setRowCount(
+                                    Math.max(
+                                            currentRows,
+                                            requiredRows
+                                    )
+                            )
+                            .setColumnCount(
+                                    Math.max(
+                                            currentColumns,
+                                            requiredColumns
+                                    )
+                            );
+
+            SheetProperties newProperties =
+                    new SheetProperties()
+                            .setSheetId(sheetId)
+                            .setGridProperties(
+                                    newGridProperties
+                            );
+
+            UpdateSheetPropertiesRequest updateRequest =
+                    new UpdateSheetPropertiesRequest()
+                            .setProperties(newProperties)
+                            .setFields(
+                                    "gridProperties.rowCount,"
+                                            + "gridProperties.columnCount"
+                            );
+
+            Request request =
+                    new Request()
+                            .setUpdateSheetProperties(
+                                    updateRequest
+                            );
+
+            sheets.spreadsheets()
+                    .batchUpdate(
+                            spreadsheetId,
+                            new BatchUpdateSpreadsheetRequest()
+                                    .setRequests(
+                                            Collections.singletonList(
+                                                    request
+                                            )
+                                    )
+                    )
+                    .execute();
+
+            System.out.println(
+                    "Sheet resized: "
+                            + requiredRows
+                            + " rows x "
+                            + requiredColumns
+                            + " columns"
+            );
+
+            return;
+        }
+
+        throw new IllegalStateException(
+                "Sheet ID not found: " + sheetId
+        );
     }
 }
