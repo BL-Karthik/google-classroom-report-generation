@@ -1,73 +1,145 @@
+
 package com.bridgelabz.service;
 
 import com.bridgelabz.models.*;
+        import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.model.ValueRange;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static com.bridgelabz.service.GoogleSheetService.createSheetsService;
 
 public class SummaryService {
 
+    public static CourseSummary createSummary(
+            CourseInfo course,
+            StudentData student) {
 
-    public static CourseSummary createSummary(CourseInfo course, StudentData student)
-    {
-        String [] courseNameArray=course.name.split(" - ");
-        String courseName=courseNameArray[0].trim().substring(1);
-        String studentName=student.name;
-        String studentRollNumber=student.rollNumber;
+        String[] courseNameArray =
+                course.name.split(" - ");
 
-        double percentage_of_submissions;
+        String courseName =
+                courseNameArray[0].trim();
 
-        int submitted=0;
+        if (courseName.length() > 1) {
+            courseName =
+                    courseName.substring(1);
+        }
 
-        List<AssignmentResult> list= student.assignments;
+        String studentName =
+                student.name;
 
+        String studentRollNumber =
+                student.rollNumber;
 
-        int totalAssignments = Math.min(12, list.size());
+        int submitted = 0;
+        int totalAssignments = 0;
 
-        for (int i = 0; i < totalAssignments; i++) {
+        List<AssignmentResult> list =
+                student.assignments;
 
-            AssignmentResult assignmentColumn = list.get(i);
+        /*
+         * Count ONLY Week 1 to Week 6.
+         *
+         * Week 7, Week 8, projects, feedback,
+         * quizzes, etc. are ignored.
+         *
+         * If Week 3 was not posted, it is simply
+         * not counted in the denominator.
+         */
+        for (AssignmentResult assignment :
+                list) {
 
-            if ("Submitted".equals(assignmentColumn.status)) {
+            if (!isWeek1To6(assignment.title)) {
+                continue;
+            }
+
+            totalAssignments++;
+
+            if ("Submitted".equalsIgnoreCase(
+                    assignment.status)) {
+
                 submitted++;
             }
         }
 
-         percentage_of_submissions =
+        double percentageOfSubmissions =
                 totalAssignments == 0
                         ? 0
-                        : (double) submitted / totalAssignments;
+                        : (double) submitted
+                        / totalAssignments;
 
-        return new CourseSummary(courseName,
-                studentName,studentRollNumber,
+        return new CourseSummary(
+                courseName,
+                studentName,
+                studentRollNumber,
                 submitted,
-                percentage_of_submissions);
-
+                percentageOfSubmissions
+        );
     }
 
 
-    public static boolean exportToSummarySheet( String spreadsheetId, String tabName,
-                                                List<CourseSummary> summary)
+    private static boolean isWeek1To6(
+            String title) {
 
-    {
+        if (title == null ||
+                title.trim().isEmpty()) {
+
+            return false;
+        }
+
+        String text =
+                title.trim().toLowerCase();
+
+        /*
+         * Accepts:
+         *
+         * Week 1
+         * Week 1 - Java
+         * Week 2 Assignment
+         * Week 3 - OOPS
+         *
+         * Rejects:
+         *
+         * Week 7
+         * Week 8
+         * Project
+         * NPS Feedback
+         */
+        return text.matches(
+                ".*\\bweek\\s*[1-6]\\b.*"
+
+        );
+    }
+
+
+    public static boolean exportToSummarySheet(
+            String spreadsheetId,
+            String tabName,
+            List<CourseSummary> summary) {
 
         try {
 
-            Sheets sheets = createSheetsService();
+            Sheets sheets =
+                    createSheetsService();
 
             String sheetName = tabName;
 
             int sheetId =
-                    GoogleSheetService.getOrCreateSheet(
+                    GoogleSheetService.getOrCreateSummarySheet(
                             sheets,
                             spreadsheetId,
                             sheetName
                     );
+            GoogleSheetService.ensureSheetSize(
+                    sheets,
+                    spreadsheetId,
+                    sheetId,
+                    summary.size() + 1,
+                    5
+            );
 
             GoogleSheetService.clearSheet(
                     sheets,
@@ -78,32 +150,46 @@ public class SummaryService {
             List<List<Object>> values =
                     new ArrayList<>();
 
-            // Every coursework exports as a single
-            // Status column (grades are tracked in
-            // the Classroom itself), followed by two
-            // summary columns.
             List<Object> header =
                     new ArrayList<>();
+
             header.add("# Course Name");
-            header.add("# Roll Number ");
+            header.add("# Roll Number");
             header.add("Student Name");
             header.add("Submissions");
             header.add("Percentage");
 
             values.add(header);
 
-            for (CourseSummary courseSummary : summary) {
+            for (CourseSummary courseSummary :
+                    summary) {
+
                 List<Object> row =
                         new ArrayList<>();
-                row.add(courseSummary.getCourseName());
-                row.add(courseSummary.getRollNumber());
-                row.add(courseSummary.getName());
-                row.add(courseSummary.getSubmissions());
-                row.add(courseSummary.getPercentageSubmissions());
+
+                row.add(
+                        courseSummary.getCourseName()
+                );
+
+                row.add(
+                        courseSummary.getRollNumber()
+                );
+
+                row.add(
+                        courseSummary.getName()
+                );
+
+                row.add(
+                        courseSummary.getSubmissions()
+                );
+
+                row.add(
+                        courseSummary
+                                .getPercentageSubmissions()
+                );
+
                 values.add(row);
-
             }
-
 
             ValueRange body =
                     new ValueRange()
@@ -135,23 +221,18 @@ public class SummaryService {
 
             return true;
 
-        } catch (
-                com.google.api.client.googleapis.json.GoogleJsonResponseException e) {
-
-            System.out.println(
-                    "\nGoogle Sheets export failed."
-            );
-
-            System.out.println(
-                    "HTTP Status: "
-                            + e.getStatusCode()
-            );
+        }catch (GoogleJsonResponseException e) {
+            System.out.println("Google Sheets export failed.");
+            System.out.println("HTTP Status: " + e.getStatusCode());
+            System.out.println("Error message: " + e.getDetails());
+            e.printStackTrace();
 
             if (e.getStatusCode() == 404) {
 
                 System.out.println(
-                        "Spreadsheet not found or service account "
-                                + "does not have access."
+                        "Spreadsheet not found or "
+                                + "service account does not "
+                                + "have access."
                 );
             }
 
@@ -168,5 +249,4 @@ public class SummaryService {
             return false;
         }
     }
-
 }
